@@ -14,7 +14,7 @@ function LoginForm(props) {
     } else {
       setLoginButtonValidation(true);
     }
-  });
+  }, [email, password]);
 
   return (
     <form>
