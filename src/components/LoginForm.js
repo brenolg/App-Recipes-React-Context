@@ -43,7 +43,7 @@ function LoginForm() {
         type="button"
         data-testid="login-submit-btn"
         disabled={ loginButtonValidation }
-
+        onClick={ () => localStorage.setItem('user', JSON.stringify({ email })) }
       >
         Login
       </button>
