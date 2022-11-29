@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-function LoginForm() {
+function LoginForm(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginButtonValidation, setLoginButtonValidation] = useState(true);
@@ -43,12 +44,22 @@ function LoginForm() {
         type="button"
         data-testid="login-submit-btn"
         disabled={ loginButtonValidation }
-        onClick={ () => localStorage.setItem('user', JSON.stringify({ email })) }
+        onClick={ () => {
+          const { history } = props;
+          localStorage.setItem('user', JSON.stringify({ email }));
+          history.push('/meals');
+        } }
       >
         Login
       </button>
     </form>
   );
 }
+
+LoginForm.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+}.isRequired;
 
 export default LoginForm;
