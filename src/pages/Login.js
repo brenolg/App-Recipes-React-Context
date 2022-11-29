@@ -1,13 +1,8 @@
 import React from 'react';
-import Footer from '../components/Footer';
 
 function Login() {
   return (
-    <>
-      <div>Login</div>
-      <Footer />
-    </>
-
+    <div>Login</div>
   );
 }
 
