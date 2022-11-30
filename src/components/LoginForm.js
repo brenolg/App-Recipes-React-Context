@@ -47,7 +47,8 @@ function LoginForm(props) {
         onClick={ () => {
           const { history } = props;
           localStorage.setItem('user', JSON.stringify({ email }));
-          history.push('/meals');
+          // IMPORTANTE: reverter para meals quando o requisito 56 for concluído
+          history.push('/favorite-recipes');
         } }
       >
         Login
