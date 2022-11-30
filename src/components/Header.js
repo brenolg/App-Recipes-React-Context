@@ -3,33 +3,48 @@ import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
-function Header({ pageTitle }) {
+function Header({ pageTitle, searchSymbol }) {
   return (
-    <div>
-      <img
-        src={ profileIcon }
-        data-testid="profile-top-btn"
-        alt="Profile Icon"
-      />
+    <header>
+
+      <button
+        type="button"
+      >
+        <img
+          src={ profileIcon }
+          alt="Perfil"
+          data-testid="profile-top-btn"
+        />
+      </button>
+
       {
-        (pageTitle === 'Meals' || pageTitle === 'Drinks')
-        && (
+        searchSymbol
+      && (
+        <button
+          type="button"
+        >
           <img
             src={ searchIcon }
+            alt="Pesquisar"
             data-testid="search-top-btn"
-            alt="Search Icon"
           />
-        )
+        </button>
+      )
       }
-      <h1 data-testid="page-title">
+
+      <h1
+        data-testid="page-title"
+      >
         {pageTitle}
       </h1>
-    </div>
+
+    </header>
   );
 }
 
 Header.propTypes = {
   pageTitle: PropTypes.string.isRequired,
+  searchSymbol: PropTypes.bool.isRequired,
 };
 
 export default Header;
