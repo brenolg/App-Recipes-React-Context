@@ -11,8 +11,7 @@ function App() {
     <Switch>
       <Route exact path="/" component={ Login } />
       <Route path="/meals" component={ Recipes } />
-      <Route path="/drinks" component={ Recipes } />
-      <Route path="/" />
+       <Route path="/drinks" component={ Recipes } />
       <div className="meals">
         <span className="logo">TRYBE</span>
         <object
