@@ -6,12 +6,13 @@ function SearchBar() {
   return (
     <div>
       <div>
-        <img src={ searchIcon } alt="search" />
+        <img src={ searchIcon } data-testid="search-top-btn" alt="search" />
         {/* Line 8 and 3 for test 10, remove after. */}
         <input
           type="text"
           placeholder="Search"
           data-testid="search-input"
+          onChange={ (e) => setSearch(e.target.value) }
         />
       </div>
       <div>
@@ -21,6 +22,7 @@ function SearchBar() {
             name="radio"
             id="ingredient"
             value="ingredient"
+            onChange={ (e) => setRadio(e.target.value) }
             data-testid="ingredient-search-radio"
           />
           Ingredient
@@ -31,6 +33,7 @@ function SearchBar() {
             name="radio"
             id="name"
             value="name"
+            onChange={ (e) => setRadio(e.target.value) }
             data-testid="name-search-radio"
           />
           Name
@@ -41,6 +44,7 @@ function SearchBar() {
             name="radio"
             id="letter"
             value="letter"
+            onChange={ (e) => setRadio(e.target.value) }
             data-testid="first-letter-search-radio"
           />
           First Letter
