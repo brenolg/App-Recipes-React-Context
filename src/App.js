@@ -5,6 +5,7 @@ import rockGlass from './images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import SearchBar from './components/SearchBar';
+import Recipes from './pages/Recipes';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <Route exact path="/drinks" component={ SearchBar } />
       { /* Route line 12 add for dev component SearchBar */ }
       <Route exact path="/" component={ Login } />
-      <Route path="/" />
+      <Route path="/meals" component={ Recipes } />
       <div className="meals">
         <span className="logo">TRYBE</span>
         <object
