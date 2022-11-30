@@ -34,7 +34,7 @@ function SearchBar() {
     fetchPlanetList();
     // Make the request after clicking the search
     // button and not when clicking the radio
-  }, [url]);
+  }, [url, path]);
 
   useEffect(() => {
     let ingEnd = '';
@@ -66,19 +66,8 @@ function SearchBar() {
     }
   }, [radio, search, path]);
 
-  //   useEffect(() => {
-  // const btnClickSearch = async () => {
-  //   if (list.meals.length === 1) {
-  //     setOne(true);
-  //     setId(list.meals[0].idMeal);
-  //   } else {
-  //     setId(list.drinks[0].idDrink);
-  //   }
-  // };
-
   const hist = useHistory();
   const btnClickSearch = async () => {
-    // setOne(window.location.pathname);
     if (listFood === 1) {
       return hist.push(`/meals/${idFoods}`);
     } if (listDrink === 1) {
@@ -135,7 +124,6 @@ function SearchBar() {
         </label>
       </div>
       <div>
-        {/* <Link to={ one ? `/meals/:${id}` : '/meals' }> */}
         <button
           type="button"
           data-testid="exec-search-btn"
