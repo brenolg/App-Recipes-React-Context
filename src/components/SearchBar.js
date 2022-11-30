@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import './SearchBar.css'; // Css just for dark theme.
+import { useHistory } from 'react-router-dom';
 import searchIcon from '../images/searchIcon.svg';
 
 function SearchBar() {
   const [radio, setRadio] = useState('.');
   const [search, setSearch] = useState();
   const [url, setUrl] = useState('');
+  const [listFood, setListFood] = useState();
+  const [listDrink, setListDrink] = useState();
+  // const [one, setOne] = useState(false);
+  const [idFoods, setIdFood] = useState('');
+  const [idDrinks, setIdDrink] = useState();
+  // const [tt, setTt] = useState(false);
 
+  const path = window.location.pathname;
   useEffect(() => {
     const fetchPlanetList = async () => {
       try {
         const response = await fetch(url);
-        const list = await response.json();
-        console.log(list);
+        const lists = await response.json();
+        if (path === '/meals') {
+          setListFood(lists.meals.length);
+          setIdFood(lists.meals[0].idMeal);
+        } else {
+          setListDrink(lists.drinks.length);
+          setIdDrink(lists.drinks[0].idDrink);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -21,12 +35,13 @@ function SearchBar() {
     // Make the request after clicking the search
     // button and not when clicking the radio
   }, [url]);
-  const path = window.location.pathname;
+
   useEffect(() => {
     let ingEnd = '';
     let nameEnd = '';
     let letterEnd = '';
-
+    console.log(path);
+    console.log(nameEnd);
     if (path === '/meals') {
       ingEnd = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${search}`;
       nameEnd = `https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`;
@@ -42,7 +57,6 @@ function SearchBar() {
         global.alert('Your search must have only 1 (one) character');
       }
     }
-
     if (radio === 'ingredient') {
       setUrl(ingEnd);
     } else if (radio === 'name') {
@@ -51,6 +65,26 @@ function SearchBar() {
       setUrl(letterEnd);
     }
   }, [radio, search, path]);
+
+  //   useEffect(() => {
+  // const btnClickSearch = async () => {
+  //   if (list.meals.length === 1) {
+  //     setOne(true);
+  //     setId(list.meals[0].idMeal);
+  //   } else {
+  //     setId(list.drinks[0].idDrink);
+  //   }
+  // };
+
+  const hist = useHistory();
+  const btnClickSearch = async () => {
+    // setOne(window.location.pathname);
+    if (listFood === 1) {
+      return hist.push(`/meals/${idFoods}`);
+    } if (listDrink === 1) {
+      return hist.push(`/drinks/${idDrinks}`);
+    }
+  };
 
   return (
     <div>
@@ -101,13 +135,16 @@ function SearchBar() {
         </label>
       </div>
       <div>
+        {/* <Link to={ one ? `/meals/:${id}` : '/meals' }> */}
         <button
           type="button"
           data-testid="exec-search-btn"
-        //   onClick={ () => () }
+          onClick={ btnClickSearch }
         >
           SEARCH
         </button>
+
+        {/* </Link> */}
       </div>
     </div>
   );
