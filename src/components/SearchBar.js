@@ -21,12 +21,21 @@ function SearchBar() {
     // Make the request after clicking the search
     // button and not when clicking the radio
   }, [url]);
-
+  const path = window.location.pathname;
   useEffect(() => {
-    const ingEnd = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${search}`;
-    const nameEnd = `https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`;
-    const letterEnd = `https://www.themealdb.com/api/json/v1/1/search.php?f=${search}`;
+    let ingEnd = '';
+    let nameEnd = '';
+    let letterEnd = '';
 
+    if (path === '/meals') {
+      ingEnd = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${search}`;
+      nameEnd = `https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`;
+      letterEnd = `https://www.themealdb.com/api/json/v1/1/search.php?f=${search}`;
+    } else {
+      ingEnd = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${search}`;
+      nameEnd = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`;
+      letterEnd = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${search}`;
+    }
     if (search !== undefined) {
       console.log(search);
       if (radio === 'letter' && search.length > 1) {
@@ -41,7 +50,7 @@ function SearchBar() {
     } else {
       setUrl(letterEnd);
     }
-  }, [radio, search]);
+  }, [radio, search, path]);
 
   return (
     <div>

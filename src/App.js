@@ -10,6 +10,7 @@ function App() {
   return (
     <Switch>
       <Route exact path="/meals" component={ SearchBar } />
+      <Route exact path="/drinks" component={ SearchBar } />
       { /* Route line 12 add for dev component SearchBar */ }
       <Route exact path="/" component={ Login } />
       <Route path="/" />
