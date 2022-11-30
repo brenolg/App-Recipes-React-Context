@@ -4,7 +4,6 @@ import searchIcon from '../images/searchIcon.svg';
 
 function SearchBar() {
   const [radio, setRadio] = useState('.');
-  //   const [iptSearch, setIptSearch] = useState('');
   const [search, setSearch] = useState();
   const [url, setUrl] = useState('');
 
