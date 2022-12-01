@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import Recipes from './pages/Recipes';
 import Profile from './pages/Profile';
+import FavoriteRecipes from './pages/FavoriteRecipes';
+import DoneRecipes from './pages/DoneRecipes';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <Route path="/meals" component={ Recipes } />
       <Route path="/drinks" component={ Recipes } />
       <Route path="/profile" component={ Profile } />
+      <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+      <Route path="/done-recipes" component={ DoneRecipes } />
       <div className="meals">
         <span className="logo">TRYBE</span>
         <object
