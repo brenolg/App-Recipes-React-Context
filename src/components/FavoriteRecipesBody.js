@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import shareIcon from '../images/shareIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function FavoriteRecipesBody() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
@@ -7,7 +9,6 @@ function FavoriteRecipesBody() {
   }, []);
   return (
     <>
-      { console.log(favoriteRecipes) }
       <form>
         <button
           type="button"
@@ -40,7 +41,8 @@ function FavoriteRecipesBody() {
           <p
             data-testid={ `${index}-horizontal-top-text` }
           >
-            { recipe.category }
+            { recipe.type === 'meal' && `${recipe.nationality} - ${recipe.category}` }
+            { recipe.type === 'drink' && `${recipe.alcoholicOrNot}` }
           </p>
           <p
             data-testid={ `${index}-horizontal-name` }
@@ -49,15 +51,21 @@ function FavoriteRecipesBody() {
           </p>
           <button
             type="button"
-            data-testid={ `${index}-horizontal-share-btn` }
           >
-            compartilhar
+            <img
+              data-testid={ `${index}-horizontal-share-btn` }
+              src={ shareIcon }
+              alt="icone de compartilhar"
+            />
           </button>
           <button
             type="button"
-            data-testid={ `${index}-horizontal-favorite-btn` }
           >
-            favoritar
+            <img
+              data-testid={ `${index}-horizontal-favorite-btn` }
+              src={ blackHeartIcon }
+              alt="icone de compartilhar"
+            />
           </button>
         </div>
       ))}
