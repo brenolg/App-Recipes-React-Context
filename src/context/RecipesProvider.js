@@ -6,6 +6,7 @@ import RecipesContext from './RecipesContext';
 export default function RecipesProvider({ children }) {
   const [drinks, setDrinks] = useState([]);
   const [meals, setMeals] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const mealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -14,6 +15,7 @@ export default function RecipesProvider({ children }) {
     async function fetch() {
       setDrinks(await fetchRecipes(drinkUrl));
       setMeals(await fetchRecipes(mealsUrl));
+      setLoading(false);
     }
     fetch();
   }, []);
@@ -22,9 +24,11 @@ export default function RecipesProvider({ children }) {
 
     drinks,
     meals,
+    loading,
     setDrinks,
     setMeals,
-  }), [drinks, meals]);
+    setLoading,
+  }), [drinks, meals, loading]);
 
   return (
     <RecipesContext.Provider value={ value }>
