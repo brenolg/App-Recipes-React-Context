@@ -7,28 +7,35 @@ export default function RecipesProvider({ children }) {
   const [drinks, setDrinks] = useState([]);
   const [meals, setMeals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [catDrink, setCatDrink] = useState([]);
+  const [catMeal, setCatMeal] = useState([]);
 
   const mealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  const catDrinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  const catMealUrl = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
 
   useEffect(() => {
     async function fetch() {
       setDrinks(await fetchRecipes(drinkUrl));
       setMeals(await fetchRecipes(mealsUrl));
+      setCatDrink(await fetchRecipes(catDrinkUrl));
+      setCatMeal(await fetchRecipes(catMealUrl));
       setLoading(false);
     }
     fetch();
   }, []);
 
   const value = useMemo(() => ({
-
+    catMeal,
+    catDrink,
     drinks,
     meals,
     loading,
     setDrinks,
     setMeals,
     setLoading,
-  }), [drinks, meals, loading]);
+  }), [drinks, meals, loading, catDrink, catMeal, setLoading]);
 
   return (
     <RecipesContext.Provider value={ value }>
