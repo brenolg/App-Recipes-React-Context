@@ -1,4 +1,5 @@
 import Header from '../components/Header';
+import shareIcon from '../images/shareIcon.svg';
 import './DoneRecipes.css'; // Css just for dark theme.
 
 function DoneRecipes() {
@@ -66,10 +67,16 @@ function DoneRecipes() {
                 alt={ `${doneRecipes[index]}.name` }
                 data-testid={ `${index}-horizontal-image` }
               />
+
               <p
                 data-testid={ `${index}-horizontal-top-text` }
               >
-                {el.category}
+                {
+                  (el.type === 'meal')
+                    ? `${el.nationality} - ${el.category}`
+                    : (`${el.alcoholicOrNot}`)
+                }
+                {console.log(el.type)}
               </p>
               <p
                 data-testid={ `${index}-horizontal-name` }
@@ -83,9 +90,9 @@ function DoneRecipes() {
               </p>
               <p
                 data-testid={ `${index}-horizontal-share-btn` }
-              >
-                Elemento de compartilhar
-              </p>
+                src={ shareIcon }
+                alt="share"
+              />
 
               { el.tags.map((indexs) => (
 
