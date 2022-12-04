@@ -4,8 +4,8 @@ body {
 }
 
 .share {
-  width: 32px;
-  height: 32px;
   background-color: white;
   color: black;
+  height: 32px;
+  width: 32px;
 }
