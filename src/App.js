@@ -6,10 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import Recipes from './pages/Recipes';
 import Profile from './pages/Profile';
+import DoneRecipes from './pages/DoneRecipes';
 
 function App() {
   return (
     <Switch>
+      <Route exact path="/done-recipes" component={ DoneRecipes } />
       <Route exact path="/" component={ Login } />
       <Route path="/meals" component={ Recipes } />
       <Route path="/drinks" component={ Recipes } />
