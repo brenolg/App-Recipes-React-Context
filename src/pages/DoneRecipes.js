@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import useCopyToClipboard from '../hooks/useCopyToClipboard.ts';
@@ -29,9 +31,26 @@ function DoneRecipes() {
     },
   ];
   const [value, copy] = useCopyToClipboard();
+  const [list, setList] = useState(doneRecipes);
   const copyUrl = (index) => (`${window.location.protocol}//${
     window.location.host
   }/meals/${doneRecipes[index].id}`);
+
+  const a = (e) => {
+    switch (e) {
+    case 'Meals':
+      setList(doneRecipes.filter((el) => el.type.includes('meal')));
+      break;
+    case 'Drinks':
+      setList(doneRecipes.filter((el) => el.type.includes('drink')));
+      break;
+    case 'All':
+      setList(doneRecipes);
+      break;
+    default:
+      break;
+    }
+  };
 
   return (
     <div>
@@ -41,39 +60,40 @@ function DoneRecipes() {
       <div>
         <button
           type="button"
-          data-testid="filter-by-all-btn"
-          onClick={ () => a() }
-        >
-          All
-        </button>
-        <button
-          type="button"
           data-testid="filter-by-meal-btn"
-          onClick={ () => a() }
+          onClick={ (e) => a(e.target.innerText) }
         >
           Meals
         </button>
         <button
           type="button"
           data-testid="filter-by-drink-btn"
-          onClick={ () => a() }
+          onClick={ (e) => a(e.target.innerText) }
         >
           Drinks
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-all-btn"
+          onClick={ (e) => a(e.target.innerText) }
+        >
+          All
         </button>
       </div>
       <div>
         {
-          doneRecipes.map((el, index) => (
+          list.map((el, index) => (
 
             <div
               key={ index }
             >
-              <img
-                src={ el.image }
-                alt={ `${doneRecipes[index]}.name` }
-                data-testid={ `${index}-horizontal-image` }
-              />
-
+              <Link to={ `/${el.type}s/${el.id}` }>
+                <img
+                  src={ el.image }
+                  alt={ `${doneRecipes[index]}.name` }
+                  data-testid={ `${index}-horizontal-image` }
+                />
+              </Link>
               <p
                 data-testid={ `${index}-horizontal-top-text` }
               >
@@ -82,13 +102,14 @@ function DoneRecipes() {
                     ? `${el.nationality} - ${el.category}`
                     : (`${el.alcoholicOrNot}`)
                 }
-                {console.log(el.type)}
               </p>
-              <p
-                data-testid={ `${index}-horizontal-name` }
-              >
-                {el.name}
-              </p>
+              <Link to={ `/${el.type}s/${el.id}` }>
+                <p
+                  data-testid={ `${index}-horizontal-name` }
+                >
+                  {el.name}
+                </p>
+              </Link>
               <p
                 data-testid={ `${index}-horizontal-done-date` }
               >
