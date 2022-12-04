@@ -2,3 +2,10 @@ body {
   background-color: black;
   color: white;
 }
+
+.share {
+  width: 32px;
+  height: 32px;
+  background-color: white;
+  color: black;
+}

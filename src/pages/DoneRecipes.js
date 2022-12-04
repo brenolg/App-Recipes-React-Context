@@ -1,5 +1,6 @@
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
+import useCopyToClipboard from '../hooks/useCopyToClipboard.ts';
 import './DoneRecipes.css'; // Css just for dark theme.
 
 function DoneRecipes() {
@@ -27,6 +28,11 @@ function DoneRecipes() {
       tags: [],
     },
   ];
+  const [value, copy] = useCopyToClipboard();
+  const copyUrl = (index) => (`${window.location.protocol}//${
+    window.location.host
+  }/meals/${doneRecipes[index].id}`);
+
   return (
     <div>
       <div>
@@ -88,11 +94,18 @@ function DoneRecipes() {
               >
                 {el.doneDate}
               </p>
-              <p
-                data-testid={ `${index}-horizontal-share-btn` }
-                src={ shareIcon }
-                alt="share"
-              />
+              <button
+                type="button"
+                onClick={ () => copy(copyUrl(index)) }
+              >
+                <p
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  src={ shareIcon }
+                  className="share"
+                  alt="share"
+                />
+                {value !== null && 'Link copied!'}
+              </button>
 
               { el.tags.map((indexs) => (
 
