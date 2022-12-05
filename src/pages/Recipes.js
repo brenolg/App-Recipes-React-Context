@@ -14,6 +14,7 @@ export default function Recipes() {
   const [path, setPath] = useState();
   const [catFilter, setCatFilter] = useState([]);
   const [filterSwitch, setFilterSwitch] = useState(false);
+  const [togleCat, setTogleCat] = useState('');
 
   useEffect(() => {
     const pathLocation = window.location.pathname;
@@ -24,19 +25,60 @@ export default function Recipes() {
   const catMealUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
   const catDrinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
 
-  const handleClickCategory = async ({ target }) => {
-    if (path === '/drinks') {
-      setLoading(true);
-      const drinksFilter = await requestApi(catDrinkUrl, target.name);
-      setCatFilter(drinksFilter);
-      setFilterSwitch(true);
-      setLoading(false);
-    } else {
+  const mealCategory = async (target) => {
+    if (togleCat === '' || togleCat !== target.name) {
       setLoading(true);
       const mealsFilter = await requestApi(catMealUrl, target.name);
       setCatFilter(mealsFilter);
       setFilterSwitch(true);
       setLoading(false);
+      setTogleCat(target.name);
+    } if (togleCat === 'Beef') {
+      setFilterSwitch(false);
+      setTogleCat('');
+    } if (togleCat === 'Breakfast') {
+      setFilterSwitch(false);
+      setTogleCat('');
+    } if (togleCat === 'Chicken') {
+      setFilterSwitch(false);
+      setTogleCat('');
+    } if (togleCat === 'Dessert') {
+      setFilterSwitch(false);
+      setTogleCat('');
+    } if (togleCat === 'Goat') {
+      setFilterSwitch(false);
+      setTogleCat('');
+    }
+  };
+
+  const drinkCategory = async (target) => {
+    if (togleCat === '' || togleCat !== target.name) {
+      setLoading(true);
+      const drinksFilter = await requestApi(catDrinkUrl, target.name);
+      setCatFilter(drinksFilter);
+      setFilterSwitch(true);
+      setLoading(false);
+      setTogleCat(target.name);
+    } if (togleCat === 'Ordinary Drink') {
+      setFilterSwitch(false);
+      setTogleCat('');
+    } if (togleCat === 'Cocktail') {
+      setFilterSwitch(false);
+      setTogleCat('');
+    } if (togleCat === 'Shake') {
+      setFilterSwitch(false);
+      setTogleCat('');
+    } if (togleCat === 'Cocoa') {
+      setFilterSwitch(false);
+      setTogleCat('');
+    }
+  };
+
+  const handleClickCategory = async ({ target }) => {
+    if (path === '/drinks') {
+      drinkCategory(target);
+    } else {
+      mealCategory(target);
     }
   };
 
