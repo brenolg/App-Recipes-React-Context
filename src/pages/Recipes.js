@@ -18,22 +18,30 @@ export default function Recipes() {
   useEffect(() => {
     const pathLocation = window.location.pathname;
     setPath(pathLocation);
+    setFilterSwitch(false);
   }, []);
 
   const catMealUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
   const catDrinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
+
   const handleClickCategory = async ({ target }) => {
-    setLoading(true);
     if (path === '/drinks') {
+      setLoading(true);
       const drinksFilter = await requestApi(catDrinkUrl, target.name);
       setCatFilter(drinksFilter);
       setFilterSwitch(true);
+      setLoading(false);
     } else {
+      setLoading(true);
       const mealsFilter = await requestApi(catMealUrl, target.name);
       setCatFilter(mealsFilter);
       setFilterSwitch(true);
+      setLoading(false);
     }
-    setLoading(false);
+  };
+
+  const deleteFilterCat = () => {
+    setFilterSwitch(false);
   };
 
   const twelve = 12;
@@ -61,28 +69,55 @@ export default function Recipes() {
             </nav>
           ))}
 
-          {drinks.drinks.slice(0, twelve).map((drink, index) => (
-            <div
-              data-testid={ `${index}-recipe-card` }
-              key={ index }
-            >
-              <p data-testid={ `${index}-card-name` }>
-                {drink.strDrink}
-              </p>
-              <img
-                data-testid={ `${index}-card-img` }
-                alt={ drink.strDrink }
-                src={ drink.strDrinkThumb }
-              />
-            </div>
-          ))}
+          <button
+            data-testid="All-category-filter"
+            type="button"
+            onClick={ deleteFilterCat }
+          >
+            Other/Unknown
+          </button>
+
+          {filterSwitch === true ? (
+            catFilter.drinks.slice(0, twelve).map((drink, index) => (
+              <div
+                data-testid={ `${index}-recipe-card` }
+                key={ index }
+              >
+                <p data-testid={ `${index}-card-name` }>
+                  {drink.strDrink}
+                </p>
+                <img
+                  data-testid={ `${index}-card-img` }
+                  alt={ drink.strDrink }
+                  src={ drink.strDrinkThumb }
+                />
+              </div>
+            ))
+
+          ) : (
+
+            drinks.drinks.slice(0, twelve).map((drinkC, index) => (
+              <div
+                data-testid={ `${index}-recipe-card` }
+                key={ index }
+              >
+                <p data-testid={ `${index}-card-name` }>
+                  {drinkC.strDrink}
+                </p>
+                <img
+                  data-testid={ `${index}-card-img` }
+                  alt={ drinkC.strDrink }
+                  src={ drinkC.strDrinkThumb }
+                />
+              </div>
+            ))
+          )}
+
         </>
       );
     }
-
     return (
       <>
-
         {catMeal.meals.slice(0, five).map((catM, index) => (
           <nav
             key={ index }
@@ -92,30 +127,61 @@ export default function Recipes() {
               name={ catM.strCategory }
               key={ index }
               type="button"
+              onClick={ handleClickCategory }
             >
               {catM.strCategory}
             </button>
+
           </nav>
         ))}
 
-        {meals.meals.slice(0, twelve).map((meal, index) => (
-          <div
-            data-testid={ `${index}-recipe-card` }
-            key={ index }
-          >
-            <p
+        <button
+          data-testid="All-category-filter"
+          type="button"
+          onClick={ deleteFilterCat }
+        >
+          Other/Unknown
+        </button>
+
+        {filterSwitch === true ? (
+          catFilter.meals.slice(0, twelve).map((mealC, index) => (
+            <div
+              data-testid={ `${index}-recipe-card` }
               key={ index }
-              data-testid={ `${index}-card-name` }
             >
-              {meal.strMeal}
-            </p>
-            <img
-              data-testid={ `${index}-card-img` }
-              alt={ meal.strMeal }
-              src={ meal.strMealThumb }
-            />
-          </div>
-        ))}
+              <p data-testid={ `${index}-card-name` }>
+                {mealC.strMeal}
+              </p>
+              <img
+                data-testid={ `${index}-card-img` }
+                alt={ mealC.strMeal }
+                src={ mealC.strMealThumb }
+              />
+            </div>
+          ))
+
+        ) : (
+
+          meals.meals.slice(0, twelve).map((meal, index) => (
+            <div
+              data-testid={ `${index}-recipe-card` }
+              key={ index }
+            >
+              <p
+                key={ index }
+                data-testid={ `${index}-card-name` }
+              >
+                {meal.strMeal}
+              </p>
+              <img
+                data-testid={ `${index}-card-img` }
+                alt={ meal.strMeal }
+                src={ meal.strMealThumb }
+              />
+            </div>
+          ))
+        )}
+
       </>
     );
   }
