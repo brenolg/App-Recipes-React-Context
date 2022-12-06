@@ -126,7 +126,7 @@ export default function Recipes(props) {
                   type="button"
                   onClick={ () => handleDrinksDetails(drink.idDrink) }
                 >
-                  Detalhes
+                  Detalhess
                 </button>
               </div>
             ))
