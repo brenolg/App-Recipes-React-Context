@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import Loading from '../components/Loading';
 import requestApi from '../services/requestAPI';
 
-export default function Recipes() {
+export default function Recipes(props) {
   const {
     loading,
     drinks,
@@ -11,6 +12,7 @@ export default function Recipes() {
     catDrink,
     catMeal,
     setLoading } = useContext(RecipesContext);
+
   const [path, setPath] = useState();
   const [catFilter, setCatFilter] = useState([]);
   const [filterSwitch, setFilterSwitch] = useState(false);
@@ -24,7 +26,6 @@ export default function Recipes() {
 
   const catMealUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
   const catDrinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
-
   const mealCategory = async (target) => {
     if (togleCat === '' || togleCat !== target.name) {
       setLoading(true);
@@ -33,19 +34,8 @@ export default function Recipes() {
       setFilterSwitch(true);
       setLoading(false);
       setTogleCat(target.name);
-    } if (togleCat === 'Beef') {
-      setFilterSwitch(false);
-      setTogleCat('');
-    } if (togleCat === 'Breakfast') {
-      setFilterSwitch(false);
-      setTogleCat('');
-    } if (togleCat === 'Chicken') {
-      setFilterSwitch(false);
-      setTogleCat('');
-    } if (togleCat === 'Dessert') {
-      setFilterSwitch(false);
-      setTogleCat('');
-    } if (togleCat === 'Goat') {
+    } if (togleCat === 'Beef' || togleCat === 'Breakfast' || togleCat === 'Chicken'
+     || togleCat === 'Dessert' || togleCat === 'Goat') {
       setFilterSwitch(false);
       setTogleCat('');
     }
@@ -59,16 +49,8 @@ export default function Recipes() {
       setFilterSwitch(true);
       setLoading(false);
       setTogleCat(target.name);
-    } if (togleCat === 'Ordinary Drink') {
-      setFilterSwitch(false);
-      setTogleCat('');
-    } if (togleCat === 'Cocktail') {
-      setFilterSwitch(false);
-      setTogleCat('');
-    } if (togleCat === 'Shake') {
-      setFilterSwitch(false);
-      setTogleCat('');
-    } if (togleCat === 'Cocoa') {
+    } if (togleCat === 'Ordinary Drink' || togleCat === 'Cocktail'
+    || togleCat === 'Shake' || togleCat === 'Cocoa') {
       setFilterSwitch(false);
       setTogleCat('');
     }
@@ -86,6 +68,16 @@ export default function Recipes() {
     setFilterSwitch(false);
   };
 
+  const handleDrinksDetails = (id) => {
+    const { history } = props;
+    history.push(`/drinks/${id}`);
+  };
+
+  const handleMealsDetails = (id) => {
+    const { history } = props;
+    history.push(`/meals/${id}`);
+  };
+
   const twelve = 12;
   const five = 5;
   if (loading === true) {
@@ -94,7 +86,6 @@ export default function Recipes() {
     if (path === '/drinks') {
       return (
         <>
-
           {catDrink.drinks.slice(0, five).map((catD, index) => (
             <nav
               key={ index }
@@ -110,7 +101,6 @@ export default function Recipes() {
               </button>
             </nav>
           ))}
-
           <button
             data-testid="All-category-filter"
             type="button"
@@ -118,7 +108,6 @@ export default function Recipes() {
           >
             Other/Unknown
           </button>
-
           {filterSwitch === true ? (
             catFilter.drinks.slice(0, twelve).map((drink, index) => (
               <div
@@ -133,11 +122,15 @@ export default function Recipes() {
                   alt={ drink.strDrink }
                   src={ drink.strDrinkThumb }
                 />
+                <button
+                  type="button"
+                  onClick={ () => handleDrinksDetails(drink.idDrink) }
+                >
+                  Detalhes
+                </button>
               </div>
             ))
-
           ) : (
-
             drinks.drinks.slice(0, twelve).map((drinkC, index) => (
               <div
                 data-testid={ `${index}-recipe-card` }
@@ -151,10 +144,15 @@ export default function Recipes() {
                   alt={ drinkC.strDrink }
                   src={ drinkC.strDrinkThumb }
                 />
+                <button
+                  type="button"
+                  onClick={ () => handleDrinksDetails(drinkC.idDrink) }
+                >
+                  Detalhes
+                </button>
               </div>
             ))
           )}
-
         </>
       );
     }
@@ -173,10 +171,8 @@ export default function Recipes() {
             >
               {catM.strCategory}
             </button>
-
           </nav>
         ))}
-
         <button
           data-testid="All-category-filter"
           type="button"
@@ -199,11 +195,15 @@ export default function Recipes() {
                 alt={ mealC.strMeal }
                 src={ mealC.strMealThumb }
               />
+              <button
+                type="button"
+                onClick={ () => handleMealsDetails(mealC.idMeal) }
+              >
+                Detalhes
+              </button>
             </div>
           ))
-
         ) : (
-
           meals.meals.slice(0, twelve).map((meal, index) => (
             <div
               data-testid={ `${index}-recipe-card` }
@@ -220,11 +220,20 @@ export default function Recipes() {
                 alt={ meal.strMeal }
                 src={ meal.strMealThumb }
               />
+              <button
+                type="button"
+                onClick={ () => handleMealsDetails(meal.idMeal) }
+              >
+                Detalhes
+              </button>
             </div>
           ))
         )}
-
       </>
     );
   }
 }
+Recipes.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }) }.isRequired;
