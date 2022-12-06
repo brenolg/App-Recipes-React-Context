@@ -1,8 +1,10 @@
+
 import { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import Loading from '../components/Loading';
 import requestApi from '../services/requestAPI';
+import Footer from '../components/Footer';
 
 export default function Recipes(props) {
   const {
@@ -229,6 +231,7 @@ export default function Recipes(props) {
             </div>
           ))
         )}
+        <Footer />
       </>
     );
   }
