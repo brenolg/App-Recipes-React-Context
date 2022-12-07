@@ -6,6 +6,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 function FavoriteRecipesBody() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [flag, setFlags] = useState([]);
+  const [buttonFilter, setButtonFilter] = useState('all');
   useEffect(() => {
     setFavoriteRecipes(JSON.parse(localStorage.getItem('favoriteRecipes')));
     setFlags(favoriteRecipes.map((recipe) => ({
@@ -18,23 +19,31 @@ function FavoriteRecipesBody() {
         <button
           type="button"
           data-testid="filter-by-all-btn"
+          onClick={ () => setButtonFilter('all') }
         >
           All
         </button>
         <button
           type="button"
           data-testid="filter-by-meal-btn"
+          onClick={ () => setButtonFilter('meal') }
         >
           Meals
         </button>
         <button
           type="button"
           data-testid="filter-by-drink-btn"
+          onClick={ () => setButtonFilter('drink') }
         >
           Drinks
         </button>
       </form>
-      {favoriteRecipes.map((recipe, index) => (
+      {favoriteRecipes.filter((recipe) => {
+        if (buttonFilter === 'all') {
+          return true;
+        }
+        return recipe.type === buttonFilter;
+      }).map((recipe, index) => (
         <div
           key={ index }
         >
