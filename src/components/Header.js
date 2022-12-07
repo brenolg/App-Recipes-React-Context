@@ -1,21 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 function Header({ pageTitle, searchSymbol }) {
   return (
     <header>
-
-      <button
-        type="button"
+      <Link
+        to="/profile"
       >
-        <img
-          src={ profileIcon }
-          alt="Perfil"
-          data-testid="profile-top-btn"
-        />
-      </button>
+        <button
+          type="button"
+        >
+          <img
+            src={ profileIcon }
+            alt="Profile"
+            data-testid="profile-top-btn"
+          />
+        </button>
+      </Link>
 
       {
         searchSymbol
@@ -25,7 +29,7 @@ function Header({ pageTitle, searchSymbol }) {
         >
           <img
             src={ searchIcon }
-            alt="Pesquisar"
+            alt="Search"
             data-testid="search-top-btn"
           />
         </button>
