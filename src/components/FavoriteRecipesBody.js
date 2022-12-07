@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import copy from 'clipboard-copy';
+import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import './FavoriteRecipesBody.css';
 
 function FavoriteRecipesBody() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
@@ -38,7 +40,7 @@ function FavoriteRecipesBody() {
           Drinks
         </button>
       </form>
-      {favoriteRecipes.filter((recipe) => {
+      {(favoriteRecipes !== null) && favoriteRecipes.filter((recipe) => {
         if (buttonFilter === 'all') {
           return true;
         }
@@ -47,24 +49,30 @@ function FavoriteRecipesBody() {
         <div
           key={ index }
         >
-          <img
-            src={ recipe.image }
-            alt={ recipe.name }
-            data-testid={ `${index}-horizontal-image` }
-          />
+          <Link
+            to={ `/${recipe.type}s/${recipe.id}` }
+          >
+            <img
+              src={ recipe.image }
+              alt={ recipe.name }
+              data-testid={ `${index}-horizontal-image` }
+            />
+          </Link>
           <p
             data-testid={ `${index}-horizontal-top-text` }
           >
             { recipe.type === 'meal' && `${recipe.nationality} - ${recipe.category}` }
             { recipe.type === 'drink' && `${recipe.alcoholicOrNot}` }
           </p>
-          <p
+          <Link
+            to={ `${recipe.type}s/${recipe.id}` }
             data-testid={ `${index}-horizontal-name` }
           >
             { recipe.name }
-          </p>
+          </Link>
           <button
             type="button"
+            data-testid={ `${index}-copy-button` }
             onClick={ () => {
               copy(`http://localhost:3000/${recipe.type}s/${recipe.id}`);
               setFlags((current) => ({
