@@ -4,7 +4,6 @@ import { Switch, Route } from 'react-router-dom';
 import rockGlass from './images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
-import SearchBar from './components/SearchBar';
 import Recipes from './pages/Recipes';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
