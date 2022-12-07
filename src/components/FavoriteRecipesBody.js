@@ -9,12 +9,14 @@ function FavoriteRecipesBody() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [flag, setFlags] = useState([]);
   const [buttonFilter, setButtonFilter] = useState('all');
+
   useEffect(() => {
     setFavoriteRecipes(JSON.parse(localStorage.getItem('favoriteRecipes')));
     setFlags(favoriteRecipes.map((recipe) => ({
       [recipe.id]: false,
     })));
   }, []);
+
   return (
     <>
       <form>
