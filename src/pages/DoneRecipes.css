@@ -1,6 +1,7 @@
 body {
   background-color: black;
   color: white;
+  margin-left: 50px;
 }
 
 .share {
@@ -8,4 +9,9 @@ body {
   color: black;
   height: 32px;
   width: 32px;
+}
+
+img {
+  width: 150px;
+  height: 150px;
 }

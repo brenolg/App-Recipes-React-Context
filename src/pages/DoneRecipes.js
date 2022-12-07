@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
-import useCopyToClipboard from '../hooks/useCopyToClipboard.ts';
 import './DoneRecipes.css'; // Css just for dark theme.
 
 function DoneRecipes() {
@@ -30,24 +29,32 @@ function DoneRecipes() {
       tags: [],
     },
   ];
-  const [value, copy] = useCopyToClipboard();
+  const [copiedUrl, setcopiedUrl] = useState(false);
   const [list, setList] = useState(doneRecipes);
-  const copyUrl = (index) => (`${window.location.protocol}//${
-    window.location.host
-  }/meals/${doneRecipes[index].id}`);
-
-  const a = (e) => {
+  const copyUrl = (index) => {
+    const copyText = (`${window.location.protocol}//${
+      window.location.host
+    }/meals/${doneRecipes[index].id}`);
+    navigator.clipboard.writeText(copyText);
+    // clipboardCopy(`${window.location.protocol}//${
+    //   window.location.host
+    // }/meals/${doneRecipes[index].id}`);
+    setcopiedUrl(true);
+  };
+  console.log('aaaa');
+  const btnFilter = (e) => {
+    console.log(e);
     switch (e) {
     case 'Meals':
+      console.log('meals');
       setList(doneRecipes.filter((el) => el.type.includes('meal')));
       break;
     case 'Drinks':
+      console.log('drinks');
       setList(doneRecipes.filter((el) => el.type.includes('drink')));
       break;
-    case 'All':
-      setList(doneRecipes);
-      break;
     default:
+      setList(doneRecipes);
       break;
     }
   };
@@ -61,21 +68,21 @@ function DoneRecipes() {
         <button
           type="button"
           data-testid="filter-by-meal-btn"
-          onClick={ (e) => a(e.target.innerText) }
+          onClick={ () => btnFilter('Meals') }
         >
           Meals
         </button>
         <button
           type="button"
           data-testid="filter-by-drink-btn"
-          onClick={ (e) => a(e.target.innerText) }
+          onClick={ () => btnFilter('Drinks') }
         >
           Drinks
         </button>
         <button
           type="button"
           data-testid="filter-by-all-btn"
-          onClick={ (e) => a(e.target.innerText) }
+          onClick={ () => btnFilter('All') }
         >
           All
         </button>
@@ -86,6 +93,7 @@ function DoneRecipes() {
 
             <div
               key={ index }
+              data-testid="teste"
             >
               <Link to={ `/${el.type}s/${el.id}` }>
                 <img
@@ -117,7 +125,8 @@ function DoneRecipes() {
               </p>
               <button
                 type="button"
-                onClick={ () => copy(copyUrl(index)) }
+                onClick={ () => copyUrl(index) }
+
               >
                 <p
                   data-testid={ `${index}-horizontal-share-btn` }
@@ -125,7 +134,7 @@ function DoneRecipes() {
                   className="share"
                   alt="share"
                 />
-                {value !== null && 'Link copied!'}
+                {copiedUrl && 'Link copied!'}
               </button>
 
               { el.tags.map((indexs) => (
