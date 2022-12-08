@@ -1,11 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom'; 
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import Loading from '../components/Loading';
 import requestApi from '../services/requestAPI';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 export default function Recipes(props) {
+const history = useHistory(); 
   const {
     loading,
     drinks,
@@ -87,6 +90,13 @@ export default function Recipes(props) {
     if (path === '/drinks') {
       return (
         <>
+         <header>
+      {
+        history.location.pathname === '/meals'
+          ? <Header pageTitle="Meals" searchSymbol />
+          : <Header pageTitle="Drinks" searchSymbol />
+      }
+    </header>
           {catDrink.drinks.slice(0, five).map((catD, index) => (
             <nav
               key={ index }
@@ -127,7 +137,7 @@ export default function Recipes(props) {
                   type="button"
                   onClick={ () => handleDrinksDetails(drink.idDrink) }
                 >
-                  Detalhess
+                  Detalhes
                 </button>
               </div>
             ))
@@ -159,6 +169,13 @@ export default function Recipes(props) {
     }
     return (
       <>
+       <header>
+      {
+        history.location.pathname === '/meals'
+          ? <Header pageTitle="Meals" searchSymbol />
+          : <Header pageTitle="Drinks" searchSymbol />
+      }
+    </header>
         {catMeal.meals.slice(0, five).map((catM, index) => (
           <nav
             key={ index }
@@ -239,3 +256,4 @@ Recipes.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }) }.isRequired;
+  

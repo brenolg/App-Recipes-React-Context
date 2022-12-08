@@ -14,7 +14,14 @@ function Profile() {
   const history = useHistory();
   return (
     <div>
-      <Header pageTitle="Profile">Profile</Header>
+      <Header
+        pageTitle="Profile"
+        searchSymbol={ false }
+      >
+        Profile
+
+      </Header>
+
       <main>
         <p data-testid="profile-email">{`E-mail: ${email}`}</p>
         <button

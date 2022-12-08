@@ -61,9 +61,13 @@ function DoneRecipes() {
 
   return (
     <div>
-      <div>
-        <Header pageTitle="Done Recipes">Done Recipes</Header>
-      </div>
+      <Header
+        pageTitle="Done Recipes"
+        searchSymbol={ false }
+      >
+        Done Recipes
+
+      </Header>
       <div>
         <button
           type="button"
