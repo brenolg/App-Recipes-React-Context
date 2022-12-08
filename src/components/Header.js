@@ -1,10 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 function Header({ pageTitle, searchSymbol }) {
+  const [searchInput, setSearchInput] = useState(false);
   return (
     <header>
       <Link
@@ -26,6 +27,7 @@ function Header({ pageTitle, searchSymbol }) {
       && (
         <button
           type="button"
+          onClick={ () => setSearchInput((prevState) => !prevState) }
         >
           <img
             src={ searchIcon }
@@ -35,7 +37,7 @@ function Header({ pageTitle, searchSymbol }) {
         </button>
       )
       }
-
+      {searchInput && <input type="text" data-testid="search-input" />}
       <h1
         data-testid="page-title"
       >
