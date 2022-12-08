@@ -8,11 +8,7 @@ function Footer() {
   return (
     <footer data-testid="footer">
       <button type="button" onClick={ () => history.push('/drinks') }>
-        <img
-          src={ drinkIcon }
-          alt="drinkIcon"
-          data-testid="drinks-bottom-btn"
-        />
+        <img src={ drinkIcon } alt="drinkIcon" data-testid="drinks-bottom-btn" />
       </button>
       <button type="button" onClick={ () => history.push('/meals') }>
         <img src={ mealIcon } alt="mealIcon" data-testid="meals-bottom-btn" />

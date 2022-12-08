@@ -12,12 +12,13 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 function App() {
   return (
     <Switch>
+      <Route exact path="/done-recipes" component={ DoneRecipes } />
       <Route exact path="/" component={ Login } />
       <Route path="/meals" component={ Recipes } />
       <Route path="/drinks" component={ Recipes } />
       <Route path="/profile" component={ Profile } />
-      <Route path="/done-recipes" component={ DoneRecipes } />
       <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+      <Route path="/done-recipes" component={ DoneRecipes } />
       <div className="meals">
         <span className="logo">TRYBE</span>
         <object
