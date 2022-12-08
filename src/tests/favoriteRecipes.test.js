@@ -82,7 +82,12 @@ describe('testes da tela receitas Favoritas', () => {
 
     userEvent.click(drinkButton);
 
+    const drinkItem = screen.getByText('Aquamarine');
+    expect(drinkItem).toBeInTheDocument();
     userEvent.click(mealButton);
+
+    const mealItem = screen.getByText('Spicy Arrabiata Penne');
+    expect(mealItem).toBeInTheDocument();
 
     userEvent.click(allButton);
   });
