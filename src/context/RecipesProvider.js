@@ -9,6 +9,7 @@ export default function RecipesProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [catDrink, setCatDrink] = useState([]);
   const [catMeal, setCatMeal] = useState([]);
+  const [searchInput, setSearchInput] = useState(false);
 
   const mealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -32,10 +33,11 @@ export default function RecipesProvider({ children }) {
     drinks,
     meals,
     loading,
+    searchInput,
     setDrinks,
     setMeals,
-    setLoading,
-  }), [drinks, meals, loading, catDrink, catMeal, setLoading]);
+    setSearchInput,
+  }), [drinks, meals, loading, catDrink, catMeal, searchInput]);
 
   return (
     <RecipesContext.Provider value={ value }>

@@ -76,7 +76,7 @@ function SearchBar() {
       } if (listMeals.length > 1) {
         return setRender(listMeals);
       }
-    } else {
+    } else if (!listDrinks) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
 
@@ -86,7 +86,7 @@ function SearchBar() {
       } if (listDrinks.length > 1) {
         return setRender(listDrinks);
       }
-    } else {
+    } else if (!listDrinks) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
 

@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
+import RecipesContext from '../context/RecipesContext';
 
 function Header({ pageTitle, searchSymbol }) {
-  const [searchInput, setSearchInput] = useState(false);
+  const { searchInput, setSearchInput } = useContext(RecipesContext);
   return (
     <header>
       <Link
@@ -37,7 +39,9 @@ function Header({ pageTitle, searchSymbol }) {
         </button>
       )
       }
-      {searchInput && <input type="text" data-testid="search-input" />}
+      {searchInput
+      // <input type="text" data-testid="search-input" />
+      && <SearchBar data-testid="search-input" />}
       <h1
         data-testid="page-title"
       >
