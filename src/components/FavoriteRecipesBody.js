@@ -17,6 +17,10 @@ function FavoriteRecipesBody() {
     })));
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  }, [favoriteRecipes]);
+
   return (
     <>
       <form>
@@ -92,6 +96,12 @@ function FavoriteRecipesBody() {
           </button>
           <button
             type="button"
+            data-testid={ `${index}-unfavorite-button` }
+            onClick={ () => {
+              const recipesThatRemain = favoriteRecipes
+                .filter((el) => el.id !== recipe.id);
+              setFavoriteRecipes(recipesThatRemain);
+            } }
           >
             <img
               data-testid={ `${index}-horizontal-favorite-btn` }

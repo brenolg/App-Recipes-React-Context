@@ -4,8 +4,10 @@ import { act } from 'react-dom/test-utils';
 import App from '../App';
 import renderWithRouter from './renderWithRouter';
 
-describe('testes da tela de Login', () => {
+describe('testes da tela receitas Favoritas', () => {
   beforeEach(() => {
+    // pesquisei esse mock do localStorage em:
+    // https://stackoverflow.com/questions/65282181/how-to-use-jest-for-testing-a-react-component-with-localstorage
     const localStorageMock = (() => {
       let store = {};
       return {
@@ -64,12 +66,6 @@ describe('testes da tela de Login', () => {
   test('testa se os elementos de filtragem estão na tela e funcionando', () => {
     const { history } = renderWithRouter(<App />);
 
-    const mockClipboard = {
-      writeText: jest.fn(),
-    };
-
-    global.navigator.clipboard = mockClipboard;
-
     setLocalStorage('favoriteRecipes', favoriteRecipes);
 
     act(() => {
@@ -89,9 +85,27 @@ describe('testes da tela de Login', () => {
     userEvent.click(mealButton);
 
     userEvent.click(allButton);
+  });
+
+  test('testa se os botões de compartilhar e desfavoritar estão na tela e funcionando', () => {
+    const mockClipboard = {
+      writeText: jest.fn(),
+    };
+
+    global.navigator.clipboard = mockClipboard;
+
+    const { history } = renderWithRouter(<App />);
+
+    setLocalStorage('favoriteRecipes', favoriteRecipes);
+
+    act(() => {
+      history.push('/favorite-recipes');
+    });
 
     const copyButton = screen.getByTestId('0-copy-button');
+    const removeRecipeButton = screen.getByTestId('1-unfavorite-button');
 
     userEvent.click(copyButton);
+    userEvent.click(removeRecipeButton);
   });
 });
