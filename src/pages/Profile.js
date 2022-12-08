@@ -3,7 +3,13 @@ import Header from '../components/Header';
 function Profile() {
   return (
     <div>
-      <Header pageTitle="Profile">Profile</Header>
+      <Header
+        pageTitle="Profile"
+        searchSymbol={ false }
+      >
+        Profile
+
+      </Header>
     </div>
   );
 }
