@@ -3,77 +3,27 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import Loading from '../components/Loading';
-import requestApi from '../services/requestAPI';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Meals from '../components/Meals';
+import Drinks from '../components/Drinks';
 
 export default function Recipes() {
   const history = useHistory();
+
   const {
     loading,
-    drinks,
-    meals,
-    catDrink,
-    catMeal,
     searchInput,
-    setLoading } = useContext(RecipesContext);
+
+  } = useContext(RecipesContext);
+
   const [path, setPath] = useState();
-  const [catFilter, setCatFilter] = useState([]);
-  const [filterSwitch, setFilterSwitch] = useState(false);
-  const [togleCat, setTogleCat] = useState('');
+
   useEffect(() => {
     const pathLocation = window.location.pathname;
     setPath(pathLocation);
-    setFilterSwitch(false);
   }, []);
-  const catMealUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
-  const catDrinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
-  const mealCategory = async (target) => {
-    if (togleCat === '' || togleCat !== target.name) {
-      setLoading(true);
-      const mealsFilter = await requestApi(catMealUrl, target.name);
-      setCatFilter(mealsFilter);
-      setFilterSwitch(true);
-      setLoading(false);
-      setTogleCat(target.name);
-    } if (togleCat === 'Beef' || togleCat === 'Breakfast' || togleCat === 'Chicken'
-     || togleCat === 'Dessert' || togleCat === 'Goat') {
-      setFilterSwitch(false);
-      setTogleCat('');
-    }
-  };
-  const drinkCategory = async (target) => {
-    if (togleCat === '' || togleCat !== target.name) {
-      setLoading(true);
-      const drinksFilter = await requestApi(catDrinkUrl, target.name);
-      setCatFilter(drinksFilter);
-      setFilterSwitch(true);
-      setLoading(false);
-      setTogleCat(target.name);
-    } if (togleCat === 'Ordinary Drink' || togleCat === 'Cocktail'
-    || togleCat === 'Shake' || togleCat === 'Cocoa') {
-      setFilterSwitch(false);
-      setTogleCat('');
-    }
-  };
-  const handleClickCategory = async ({ target }) => {
-    if (path === '/drinks') {
-      drinkCategory(target);
-    } else {
-      mealCategory(target);
-    }
-  };
-  const deleteFilterCat = () => {
-    setFilterSwitch(false);
-  };
-  const handleDrinksDetails = (id) => {
-    history.push(`/drinks/${id}`);
-  };
-  const handleMealsDetails = (id) => {
-    history.push(`/meals/${id}`);
-  };
-  const twelve = 12;
-  const five = 5;
+
   if (loading === true) {
     <Loading />;
   } else {
@@ -81,89 +31,29 @@ export default function Recipes() {
       return (
         <>
           <header>
+
             {
               history.location.pathname === '/meals'
                 ? <Header pageTitle="Meals" searchSymbol />
                 : <Header pageTitle="Drinks" searchSymbol />
             }
           </header>
+
           {!searchInput && (
+
             <div>
-              {catDrink.drinks.slice(0, five).map((catD, index) => (
-                <nav
-                  key={ index }
-                >
-                  <button
-                    data-testid={ `${catD.strCategory}-category-filter` }
-                    key={ index }
-                    name={ catD.strCategory }
-                    type="button"
-                    onClick={ handleClickCategory }
-                  >
-                    {catD.strCategory}
-                  </button>
-                </nav>
-              ))}
-              <button
-                data-testid="All-category-filter"
-                type="button"
-                onClick={ deleteFilterCat }
-              >
-                Other/Unknown
-              </button>
-              {filterSwitch === true ? (
-                catFilter.drinks.slice(0, twelve).map((drink, index) => (
-                  <div
-                    data-testid={ `${index}-recipe-card` }
-                    key={ index }
-                  >
-                    <p data-testid={ `${index}-card-name` }>
-                      {drink.strDrink}
-                    </p>
-                    <img
-                      data-testid={ `${index}-card-img` }
-                      alt={ drink.strDrink }
-                      src={ drink.strDrinkThumb }
-                    />
-                    <button
-                      type="button"
-                      onClick={ () => handleDrinksDetails(drink.idDrink) }
-                    >
-                      Detalhes
-                    </button>
-                  </div>
-                ))
-              ) : (
-                drinks.drinks.slice(0, twelve).map((drinkC, index) => (
-                  <div
-                    data-testid={ `${index}-recipe-card` }
-                    key={ index }
-                  >
-                    <p data-testid={ `${index}-card-name` }>
-                      {drinkC.strDrink}
-                    </p>
-                    <img
-                      data-testid={ `${index}-card-img` }
-                      alt={ drinkC.strDrink }
-                      src={ drinkC.strDrinkThumb }
-                    />
-                    <button
-                      type="button"
-                      onClick={ () => handleDrinksDetails(drinkC.idDrink) }
-                    >
-                      Detalhes
-                    </button>
-                  </div>
-                ))
-              )}
+              <Drinks />
             </div>
           )}
+
           <Footer />
         </>
       );
     }
+
     return (
       <>
+
         <header>
           {
             history.location.pathname === '/meals'
@@ -171,84 +61,15 @@ export default function Recipes() {
               : <Header pageTitle="Drinks" searchSymbol />
           }
         </header>
+
         {!searchInput && (
           <div>
-            (
-            {catMeal.meals.slice(0, five).map((catM, index) => (
-              <nav
-                key={ index }
-              >
-                <button
-                  data-testid={ `${catM.strCategory}-category-filter` }
-                  name={ catM.strCategory }
-                  key={ index }
-                  type="button"
-                  onClick={ handleClickCategory }
-                >
-                  {catM.strCategory}
-                </button>
-              </nav>
-            ))}
-            <button
-              data-testid="All-category-filter"
-              type="button"
-              onClick={ deleteFilterCat }
-            >
-              Other/Unknown
-            </button>
-
-            {filterSwitch === true ? (
-              catFilter.meals.slice(0, twelve).map((mealC, index) => (
-                <div
-                  data-testid={ `${index}-recipe-card` }
-                  key={ index }
-                >
-                  <p data-testid={ `${index}-card-name` }>
-                    {mealC.strMeal}
-                  </p>
-                  <img
-                    data-testid={ `${index}-card-img` }
-                    alt={ mealC.strMeal }
-                    src={ mealC.strMealThumb }
-                  />
-                  <button
-                    type="button"
-                    onClick={ () => handleMealsDetails(mealC.idMeal) }
-                  >
-                    Detalhes
-                  </button>
-                </div>
-              ))
-            ) : (
-              meals.meals.slice(0, twelve).map((meal, index) => (
-                <div
-                  data-testid={ `${index}-recipe-card` }
-                  key={ index }
-                >
-                  <p
-                    key={ index }
-                    data-testid={ `${index}-card-name` }
-                  >
-                    {meal.strMeal}
-                  </p>
-                  <img
-                    data-testid={ `${index}-card-img` }
-                    alt={ meal.strMeal }
-                    src={ meal.strMealThumb }
-                  />
-                  <button
-                    type="button"
-                    onClick={ () => handleMealsDetails(meal.idMeal) }
-                  >
-                    Detalhes
-                  </button>
-                </div>
-              ))
-            )}
-            )
+            <Meals />
           </div>
         )}
+
         <Footer />
+
       </>
     );
   }
