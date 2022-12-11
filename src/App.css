@@ -13,9 +13,8 @@
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
-}
+} */
 
-/*
 #iceLeft {
   animation: clink .8s infinite ease;
   opacity: 0.6;
@@ -27,7 +26,7 @@
   opacity: 0.6;
   transform-origin: 60px 78px;
 }
-*/
+
 
 .meals > .logo {
   animation: shake 1.5s infinite ease;
@@ -71,4 +70,4 @@ footer {
   bottom: 0;
   position: fixed;
   width: 100%;
-}
+} 

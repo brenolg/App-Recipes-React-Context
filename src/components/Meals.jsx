@@ -1,8 +1,9 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import requestApi from '../services/requestAPI';
+import './Recipes.css';
 
 export default function Meals() {
   const history = useHistory();
@@ -13,15 +14,15 @@ export default function Meals() {
     filterSwitch,
     setFilterSwitch,
     catFilter,
-    setCatFilter } = useContext(RecipesContext);
-
-  const [togleCat, setTogleCat] = useState('');
+    setCatFilter,
+    togleCat,
+    setTogleCat } = useContext(RecipesContext);
 
   const catMealUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
 
   const mealCategory = async (target) => {
-    setTogleCat(target.name);
     if (togleCat === '' || togleCat !== target.name) {
+      setTogleCat(target.name);
       setLoading(true);
       const mealsFilter = await requestApi(catMealUrl, target.name);
       setCatFilter(mealsFilter);
@@ -50,10 +51,12 @@ export default function Meals() {
   const five = 5;
   return (
 
-    <main>
+    <main className="mainRecipes">
 
-      <nav>
+      <nav className="navRecipes">
+
         <button
+          className="categoryRecipes"
           data-testid="All-category-filter"
           type="button"
           onClick={ deleteFilterCat }
@@ -62,10 +65,11 @@ export default function Meals() {
         </button>
 
         {catMeal.meals.slice(0, five).map((catM, index) => (
-          <nav
+          <div
             key={ index }
           >
             <button
+              className="categoryRecipes"
               data-testid={ `${catM.strCategory}-category-filter` }
               name={ catM.strCategory }
               key={ index }
@@ -74,63 +78,75 @@ export default function Meals() {
             >
               {catM.strCategory}
             </button>
-          </nav>
+          </div>
         ))}
       </nav>
 
       {filterSwitch === true ? (
-        catFilter.meals.slice(0, twelve).map((mealC, index) => (
-          <div
-            data-testid={ `${index}-recipe-card` }
-            key={ index }
-          >
-            <p data-testid={ `${index}-card-name` }>
-              {mealC.strMeal}
-            </p>
-            <img
-              data-testid={ `${index}-card-img` }
-              alt={ mealC.strMeal }
-              src={ mealC.strMealThumb }
-            />
-            <button
-              type="button"
-              onClick={ () => handleMealsDetails(mealC.idMeal) }
+
+        <section className="cardsSection">
+
+          {catFilter.meals.slice(0, twelve).map((mealC, index) => (
+
+            <div
+              className="cardContainer"
+              data-testid={ `${index}-recipe-card` }
+              key={ index }
             >
-              Detalhes
-            </button>
-          </div>
-        ))
+
+              <img
+                className="imgRecipes"
+                data-testid={ `${index}-card-img` }
+                alt={ mealC.strMeal }
+                src={ mealC.strMealThumb }
+              />
+              <button
+                className="detailsCards"
+                data-testid={ `${index}-card-name` }
+                type="button"
+                onClick={ () => handleMealsDetails(mealC.idMeal) }
+              >
+                {mealC.strMeal}
+              </button>
+            </div>
+          ))}
+
+        </section>
 
       ) : (
 
-        meals.meals.slice(0, twelve).map((meal, index) => (
-          <div
-            data-testid={ `${index}-recipe-card` }
-            key={ index }
-          >
-            <p
+        <section className="cardsSection">
+
+          {meals.meals.slice(0, twelve).map((meal, index) => (
+
+            <div
+              className="cardContainer"
+              data-testid={ `${index}-recipe-card` }
               key={ index }
-              data-testid={ `${index}-card-name` }
             >
-              {meal.strMeal}
-            </p>
-            <img
-              data-testid={ `${index}-card-img` }
-              alt={ meal.strMeal }
-              src={ meal.strMealThumb }
-            />
-            <button
-              type="button"
-              onClick={ () => handleMealsDetails(meal.idMeal) }
-            >
-              Detalhes
-            </button>
-          </div>
-        ))
+
+              <img
+                className="imgRecipes"
+                data-testid={ `${index}-card-img` }
+                alt={ meal.strMeal }
+                src={ meal.strMealThumb }
+              />
+              <button
+                className="detailsCards"
+                data-testid={ `${index}-card-name` }
+                type="button"
+                onClick={ () => handleMealsDetails(meal.idMeal) }
+              >
+                {meal.strMeal}
+              </button>
+            </div>
+          ))}
+
+        </section>
+
       )}
 
     </main>
-
   );
 }
 

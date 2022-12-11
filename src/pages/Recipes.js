@@ -31,7 +31,6 @@ export default function Recipes() {
       return (
         <>
           <header>
-
             {
               history.location.pathname === '/meals'
                 ? <Header pageTitle="Meals" searchSymbol />
@@ -40,13 +39,13 @@ export default function Recipes() {
           </header>
 
           {!searchInput && (
-
             <div>
               <Drinks />
             </div>
           )}
 
           <Footer />
+
         </>
       );
     }

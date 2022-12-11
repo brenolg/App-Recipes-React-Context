@@ -1,8 +1,9 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import requestApi from '../services/requestAPI';
+import './Recipes.css';
 
 export default function Drinks() {
   const history = useHistory();
@@ -13,9 +14,9 @@ export default function Drinks() {
     filterSwitch,
     setFilterSwitch,
     catFilter,
-    setCatFilter } = useContext(RecipesContext);
-
-  const [togleCat, setTogleCat] = useState('');
+    setCatFilter,
+    togleCat,
+    setTogleCat } = useContext(RecipesContext);
 
   const catDrinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
 
@@ -49,11 +50,12 @@ export default function Drinks() {
   const five = 5;
   return (
 
-    <main>
+    <main className="mainRecipes">
 
-      <nav>
+      <nav className="navRecipes">
 
         <button
+          className="categoryRecipes"
           data-testid="All-category-filter"
           type="button"
           onClick={ deleteFilterCat }
@@ -62,10 +64,11 @@ export default function Drinks() {
         </button>
 
         {catDrink.drinks.slice(0, five).map((catD, index) => (
-          <nav
+          <div
             key={ index }
           >
             <button
+              className="categoryRecipes"
               data-testid={ `${catD.strCategory}-category-filter` }
               key={ index }
               name={ catD.strCategory }
@@ -74,59 +77,73 @@ export default function Drinks() {
             >
               {catD.strCategory}
             </button>
-          </nav>
+          </div>
         ))}
       </nav>
 
       {filterSwitch === true ? (
-        catFilter.drinks.slice(0, twelve).map((drink, index) => (
-          <div
-            data-testid={ `${index}-recipe-card` }
-            key={ index }
-          >
-            <p data-testid={ `${index}-card-name` }>
-              {drink.strDrink}
-            </p>
-            <img
-              data-testid={ `${index}-card-img` }
-              alt={ drink.strDrink }
-              src={ drink.strDrinkThumb }
-            />
-            <button
-              type="button"
-              onClick={ () => handleDrinksDetails(drink.idDrink) }
+
+        <section className="cardsSection">
+
+          {catFilter.drinks.slice(0, twelve).map((drink, index) => (
+
+            <div
+              className="cardContainer"
+              data-testid={ `${index}-recipe-card` }
+              key={ index }
             >
-              Detalhes
-            </button>
-          </div>
-        ))
+
+              <img
+                className="imgRecipes"
+                data-testid={ `${index}-card-img` }
+                alt={ drink.strDrink }
+                src={ drink.strDrinkThumb }
+              />
+              <button
+                className="detailsCards"
+                data-testid={ `${index}-card-name` }
+                type="button"
+                onClick={ () => handleDrinksDetails(drink.idDrink) }
+              >
+                {drink.strDrink}
+              </button>
+            </div>
+
+          ))}
+
+        </section>
 
       ) : (
 
-        drinks.drinks.slice(0, twelve).map((drinkC, index) => (
+        <section className="cardsSection">
 
-          <div
-            data-testid={ `${index}-recipe-card` }
-            key={ index }
-          >
-            <p data-testid={ `${index}-card-name` }>
-              {drinkC.strDrink}
-            </p>
-            <img
-              data-testid={ `${index}-card-img` }
-              alt={ drinkC.strDrink }
-              src={ drinkC.strDrinkThumb }
-            />
-            <button
-              type="button"
-              onClick={ () => handleDrinksDetails(drinkC.idDrink) }
+          {drinks.drinks.slice(0, twelve).map((drinkC, index) => (
+
+            <div
+              className="cardContainer"
+              data-testid={ `${index}-recipe-card` }
+              key={ index }
             >
-              Detalhes
-            </button>
 
-          </div>
+              <img
+                className="imgRecipes"
+                data-testid={ `${index}-card-img` }
+                alt={ drinkC.strDrink }
+                src={ drinkC.strDrinkThumb }
+              />
+              <button
+                className="detailsCards"
+                data-testid={ `${index}-card-name` }
+                type="button"
+                onClick={ () => handleDrinksDetails(drinkC.idDrink) }
+              >
+                {drinkC.strDrink}
+              </button>
+            </div>
+          ))}
 
-        ))
+        </section>
+
       )}
     </main>
   );
