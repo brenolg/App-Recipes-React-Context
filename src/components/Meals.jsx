@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import requestApi from '../services/requestAPI';
-import './Recipes.css';
+// import './Recipes.css';
 
 export default function Meals() {
   const history = useHistory();

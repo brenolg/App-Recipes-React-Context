@@ -1,24 +1,24 @@
-.mainRecipes {
+/* .mainRecipes {
   display: flex;
   padding-top: 7vh;
   justify-content: space-around;
     flex-direction: column;
     max-width: 85%;
     margin: auto;
-}
+} */
 
-.navRecipes {
+/* .navRecipes {
     display: flex;
     align-items: center;
-    /* justify-content: space-around; */
-} 
+    justify-content: space-around;
+}
 
 .categoryRecipes {
     border-radius: 50%;
     padding: 35px;
-} 
+}
 
-/* req 22 so passa sem esse css comentado checar tamanho maximo da tela*/
+req 22 so passa sem esse css comentado checar tamanho maximo da tela
 
 .cardsSection{
     display: flex;
@@ -37,10 +37,10 @@
 
 .imgRecipes {
     border-top-left-radius: 10px;
-    border-top-right-radius: 10px; 
+    border-top-right-radius: 10px;
 }
 
 .detailsCards{
     border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px; 
-}
+    border-bottom-right-radius: 10px;
+} */

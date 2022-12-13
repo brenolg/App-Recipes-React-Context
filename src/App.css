@@ -1,10 +1,3 @@
-body {
-  background-color: black !important;
-  height: 640px !important;
-  margin: auto !important;
-  width: 360px !important;
-}
-
 footer {
   bottom: 0;
   position: fixed;
