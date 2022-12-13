@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './SearchBar.css'; // Css just for dark theme.
 import { useHistory } from 'react-router-dom';
-import searchIcon from '../images/searchIcon.svg';
 
 function SearchBar() {
   const [radio, setRadio] = useState('.');
