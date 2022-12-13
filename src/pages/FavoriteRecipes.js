@@ -1,4 +1,5 @@
 import Header from '../components/Header';
+import FavoriteRecipesBody from '../components/FavoriteRecipesBody';
 
 function FavoriteRecipes() {
   return (
@@ -10,6 +11,7 @@ function FavoriteRecipes() {
         Favorite Recipes
 
       </Header>
+      <FavoriteRecipesBody />
     </div>
   );
 }
