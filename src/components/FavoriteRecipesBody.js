@@ -9,12 +9,18 @@ function FavoriteRecipesBody() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [flag, setFlags] = useState([]);
   const [buttonFilter, setButtonFilter] = useState('all');
+
   useEffect(() => {
     setFavoriteRecipes(JSON.parse(localStorage.getItem('favoriteRecipes')));
     setFlags(favoriteRecipes.map((recipe) => ({
       [recipe.id]: false,
     })));
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  }, [favoriteRecipes]);
+
   return (
     <>
       <form>
@@ -90,6 +96,12 @@ function FavoriteRecipesBody() {
           </button>
           <button
             type="button"
+            data-testid={ `${index}-unfavorite-button` }
+            onClick={ () => {
+              const recipesThatRemain = favoriteRecipes
+                .filter((el) => el.id !== recipe.id);
+              setFavoriteRecipes(recipesThatRemain);
+            } }
           >
             <img
               data-testid={ `${index}-horizontal-favorite-btn` }
