@@ -1,7 +1,7 @@
 .mainRecipes {
-    padding-top: 7vh;
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  padding-top: 7vh;
+  justify-content: space-around;
     flex-direction: column;
     max-width: 85%;
     margin: auto;

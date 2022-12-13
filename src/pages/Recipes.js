@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
@@ -14,10 +14,9 @@ export default function Recipes() {
   const {
     loading,
     searchInput,
-
+    path,
+    setPath,
   } = useContext(RecipesContext);
-
-  const [path, setPath] = useState();
 
   useEffect(() => {
     const pathLocation = window.location.pathname;

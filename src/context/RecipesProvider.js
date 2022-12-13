@@ -13,6 +13,7 @@ export default function RecipesProvider({ children }) {
   const [filterSwitch, setFilterSwitch] = useState(false);
   const [catFilter, setCatFilter] = useState([]);
   const [togleCat, setTogleCat] = useState('');
+  const [path, setPath] = useState();
 
   const mealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -40,6 +41,7 @@ export default function RecipesProvider({ children }) {
     filterSwitch,
     catFilter,
     togleCat,
+    path,
     setTogleCat,
     setCatFilter,
     setFilterSwitch,
@@ -47,6 +49,7 @@ export default function RecipesProvider({ children }) {
     setMeals,
     setSearchInput,
     setLoading,
+    setPath,
   }), [
     drinks,
     meals,
@@ -56,7 +59,8 @@ export default function RecipesProvider({ children }) {
     searchInput,
     filterSwitch,
     catFilter,
-    togleCat]);
+    togleCat,
+    path]);
 
   return (
     <RecipesContext.Provider value={ value }>
