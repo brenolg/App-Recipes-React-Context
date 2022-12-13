@@ -7,9 +7,11 @@
   -moz-osx-font-smoothing: grayscale;
 } */
 
-body {
+
+.root {
   background-color: black;
-  height: 640px;
+  display: flex;
+  flex-flow: column wrap;
   margin-left: auto;
   margin-right: auto;
   width: 360px;

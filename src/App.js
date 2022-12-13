@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import './index.css';
 import { Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
@@ -10,15 +11,17 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   return (
-    <Switch>
-      <Route exact path="/" component={ Login } />
-      <Route path="/meals" component={ Recipes } />
-      <Route path="/drinks" component={ Recipes } />
-      <Route path="/favorite-recipes" component={ FavoriteRecipes } />
-      <Route path="/profile" component={ Profile } />
-      <Route path="/favorite-recipes" component={ FavoriteRecipes } />
-      <Route path="/done-recipes" component={ DoneRecipes } />
-    </Switch>
+    <main className="root">
+      <Switch>
+        <Route exact path="/" component={ Login } />
+        <Route path="/meals" component={ Recipes } />
+        <Route path="/drinks" component={ Recipes } />
+        <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+        <Route path="/profile" component={ Profile } />
+        <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+        <Route path="/done-recipes" component={ DoneRecipes } />
+      </Switch>
+    </main>
   );
 }
 
