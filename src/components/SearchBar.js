@@ -96,8 +96,6 @@ function SearchBar() {
   return (
     <div>
       <div>
-        <img src={ searchIcon } data-testid="search-top-btn" alt="search" />
-        {/* Line 8 and 3 for test 10, remove after. */}
         <input
           type="text"
           placeholder="Search"

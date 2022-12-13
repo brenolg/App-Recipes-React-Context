@@ -40,7 +40,6 @@ function Header({ pageTitle, searchSymbol }) {
       )
       }
       {searchInput
-      // <input type="text" data-testid="search-input" />
       && <SearchBar data-testid="search-input" />}
       <h1
         data-testid="page-title"
