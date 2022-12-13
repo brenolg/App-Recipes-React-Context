@@ -1,0 +1,17 @@
+/* body {
+  background-color: black;
+  color: white;
+  margin-left: 50px;
+} */
+
+.share {
+  background-color: white;
+  color: black;
+  height: 32px;
+  width: 32px;
+}
+
+img {
+  height: 150px;
+  width: 150px;
+}
