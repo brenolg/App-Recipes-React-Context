@@ -47,39 +47,10 @@ function LoginForm(props) {
         onClick={ () => {
           const { history } = props;
           localStorage.setItem('user', JSON.stringify({ email }));
-          // IMPORTANTE: reverter para meals quando o requisito 56 for concluído
-          history.push('/favorite-recipes');
+          history.push('/meals');
         } }
       >
         Login
-      </button>
-      {/* IMPORTANTE: REMOVER DEPOIS DA RESOLUÇÃO DO REQUISITO 56 */}
-      <button
-        type="button"
-        onClick={ () => {
-          localStorage.setItem('favoriteRecipes', JSON.stringify([
-            {
-              id: '52771',
-              type: 'meal',
-              nationality: 'Italian',
-              category: 'Vegetarian',
-              alcoholicOrNot: '',
-              name: 'Spicy Arrabiata Penne',
-              image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-            },
-            {
-              id: '178319',
-              type: 'drink',
-              nationality: '',
-              category: 'Cocktail',
-              alcoholicOrNot: 'Alcoholic',
-              name: 'Aquamarine',
-              image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-            },
-          ]));
-        } }
-      >
-        simular receitas favoritas
       </button>
     </form>
   );
