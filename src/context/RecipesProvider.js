@@ -14,6 +14,11 @@ export default function RecipesProvider({ children }) {
   const [catFilter, setCatFilter] = useState([]);
   const [togleCat, setTogleCat] = useState('');
   const [path, setPath] = useState();
+  const [url, setUrl] = useState('');
+  const [list, setList] = useState();
+  const [listMeals, setListMeals] = useState();
+  const [listDrinks, setListDrinks] = useState();
+  const [drinkOrMealUrl, setDrinkOrMealUrl] = useState('meals');
 
   const mealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -31,6 +36,20 @@ export default function RecipesProvider({ children }) {
     fetch();
   }, []);
 
+  useEffect(() => {
+    const fetchList = async () => {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log('recipesdkorMel', drinkOrMealUrl);
+        setList(data[`${drinkOrMealUrl}`]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchList();
+  }, [url, drinkOrMealUrl]);
+
   const value = useMemo(() => ({
     catMeal,
     catDrink,
@@ -42,6 +61,14 @@ export default function RecipesProvider({ children }) {
     catFilter,
     togleCat,
     path,
+    url,
+    listMeals,
+    listDrinks,
+    list,
+    setList,
+    setListDrinks,
+    setListMeals,
+    setUrl,
     setTogleCat,
     setCatFilter,
     setFilterSwitch,
@@ -50,6 +77,7 @@ export default function RecipesProvider({ children }) {
     setSearchInput,
     setLoading,
     setPath,
+    setDrinkOrMealUrl,
   }), [
     drinks,
     meals,
@@ -60,7 +88,12 @@ export default function RecipesProvider({ children }) {
     filterSwitch,
     catFilter,
     togleCat,
-    path]);
+    path,
+    url,
+    listDrinks,
+    listMeals,
+    list,
+  ]);
 
   return (
     <RecipesContext.Provider value={ value }>
