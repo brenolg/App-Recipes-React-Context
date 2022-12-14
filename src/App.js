@@ -8,13 +8,16 @@ import Recipes from './pages/Recipes';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
+import RecipeInProgress from './pages/RecipeInProgress';
 
 function App() {
   return (
     <main className="root">
       <Switch>
         <Route exact path="/" component={ Login } />
+        <Route path="/meals/:id/in-progress" component={ RecipeInProgress } />
         <Route path="/meals" component={ Recipes } />
+        <Route path="/drinks/:id/in-progress" component={ RecipeInProgress } />
         <Route path="/drinks" component={ Recipes } />
         <Route path="/favorite-recipes" component={ FavoriteRecipes } />
         <Route path="/profile" component={ Profile } />
