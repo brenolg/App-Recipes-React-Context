@@ -3,7 +3,9 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import requestApi from '../services/requestAPI';
-// import './Recipes.css';
+import './meals&drinks.css';
+import mealsCatList from '../images/mealsCatList';
+import allMeal from '../images/allMeal.svg';
 
 export default function Meals() {
   const history = useHistory();
@@ -61,7 +63,12 @@ export default function Meals() {
           type="button"
           onClick={ deleteFilterCat }
         >
-          All
+          <img
+            className="imgCategory"
+            src={ allMeal }
+            alt="categoryIcon"
+          />
+
         </button>
 
         {catMeal.meals.slice(0, five).map((catM, index) => (
@@ -75,8 +82,15 @@ export default function Meals() {
               key={ index }
               type="button"
               onClick={ handleClickCategory }
+
             >
-              {catM.strCategory}
+              <img
+                name={ catM.strCategory }
+                src={ mealsCatList[index] }
+                className="imgCategory"
+                alt='"categoryIcon"'
+              />
+
             </button>
           </div>
         ))}
