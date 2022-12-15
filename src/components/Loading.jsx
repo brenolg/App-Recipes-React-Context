@@ -1,9 +1,9 @@
 import React from 'react';
 
-function Login() {
+function Loading() {
   return (
     <h1>Carregando...</h1>
   );
 }
 
-export default Login;
+export default Loading;

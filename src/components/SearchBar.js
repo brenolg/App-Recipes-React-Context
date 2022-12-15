@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import './SearchBar.css'; // Css just for dark theme.
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import Cards from './Cards';
 
 function SearchBar() {
   const [radio, setRadio] = useState('.');
@@ -9,10 +10,10 @@ function SearchBar() {
   const [drinksOrMeals, setDrinksOrMeals] = useState('Drink');
   const [minUrl, setMinUrl] = useState('themealdb');
   // const [alertOneChar, setAlertOneChar] = useState(false);
-  const [render, setRender] = useState([]);
+  // const [render, setRender] = useState([]);
   const [drinkOrMealUrla, setDrinkOrMealUrla] = useState('meals');
 
-  const TWELVE = 12;
+  // const TWELVE = 12;
   const hist = useHistory();
 
   const {
@@ -20,21 +21,10 @@ function SearchBar() {
     setDrinkOrMealUrl,
     setUrl,
     list,
+    setList,
   } = useContext(RecipesContext);
 
   useEffect(() => {
-    switch (radio) {
-    case 'letter':
-      setUrl(`https://www.${minUrl}.com/api/json/v1/1/search.php?f=${search}`);
-      break;
-    case 'name':
-      setUrl(`https://www.${minUrl}.com/api/json/v1/1/search.php?s=${search}`);
-      break;
-    default:
-      setUrl(`https://www.${minUrl}.com/api/json/v1/1/filter.php?i=${search}`);
-      break;
-    }
-
     if (search) {
       console.log(path);
       return (path === '/meals'
@@ -53,18 +43,38 @@ function SearchBar() {
     }
   }, [search, radio, path, minUrl, setUrl, setDrinkOrMealUrla, setDrinkOrMealUrl]);
 
-  const btnClickSearch = () => {
-    if (radio === 'letter' && search.length > 1) {
-      return global.alert('Your search must have only 1 (one) character');
-    }
+  const teste = async () => {
     if (list) {
+      console.log(list);
       if (list.length === 1) {
+        console.log('uma');
+        setList(list);
         hist.push(`/${drinkOrMealUrla}/${list[0][`id${drinksOrMeals}`]}`);
       } if (list.length > 1) {
-        setRender(list);
+        setList(list);
       }
     } else if (!list) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+  };
+
+  const btnClickSearch = async () => {
+    await teste();
+
+    switch (radio) {
+    case 'letter':
+      setUrl(`https://www.${minUrl}.com/api/json/v1/1/search.php?f=${search}`);
+      break;
+    case 'name':
+      setUrl(`https://www.${minUrl}.com/api/json/v1/1/search.php?s=${search}`);
+      break;
+    default:
+      setUrl(`https://www.${minUrl}.com/api/json/v1/1/filter.php?i=${search}`);
+      break;
+    }
+
+    if (radio === 'letter' && search.length > 1) {
+      return global.alert('Your search must have only 1 (one) character');
     }
   };
 
@@ -125,8 +135,9 @@ function SearchBar() {
 
       </div>
       <div>
-        {
-          render.slice(0, TWELVE).map((sel, index) => (
+        <Cards />
+        {/* {
+          list.slice(0, TWELVE).map((sel, index) => (
             <div
               data-testid={ `${index}-recipe-card` }
               key={ sel[`id${drinksOrMeals}`] }
@@ -144,7 +155,7 @@ function SearchBar() {
               />
             </div>
           ))
-        }
+        } */}
       </div>
     </div>
   );

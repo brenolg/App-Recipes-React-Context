@@ -15,7 +15,7 @@ export default function RecipesProvider({ children }) {
   const [togleCat, setTogleCat] = useState('');
   const [path, setPath] = useState();
   const [url, setUrl] = useState('');
-  const [list, setList] = useState();
+  const [list, setList] = useState([]);
   const [listMeals, setListMeals] = useState();
   const [listDrinks, setListDrinks] = useState();
   const [drinkOrMealUrl, setDrinkOrMealUrl] = useState('meals');
@@ -39,10 +39,12 @@ export default function RecipesProvider({ children }) {
   useEffect(() => {
     const fetchList = async () => {
       try {
+        // setLoading(true);
         const response = await fetch(url);
         const data = await response.json();
         console.log('recipesdkorMel', drinkOrMealUrl);
         setList(data[`${drinkOrMealUrl}`]);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
