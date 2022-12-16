@@ -1,26 +1,30 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import SearchBar from '../components/SearchBar';
 import renderWithRouter from './renderWithRouter';
 import App from '../App';
-import Recipes from '../pages/Recipes';
 import fetch from '../../cypress/mocks/fetch';
 
 describe('teste', () => {
   beforeEach(() => {
     jest.spyOn(global, 'fetch').mockImplementation(fetch);
   });
+
+  const searchInput = 'search-input';
+  const nameSearchRadio = 'name-search-radio';
+  const searchBtn = 'exec-search-btn';
+
   test('Se os elementos renderizam', () => {
     renderWithRouter(
       <SearchBar />,
     );
-    const search = screen.getByTestId('search-input');
+    const search = screen.getByTestId(searchInput);
     const ingrSearch = screen.getByTestId('ingredient-search-radio');
-    const nameSearch = screen.getByTestId('name-search-radio');
+    const nameSearch = screen.getByTestId(nameSearchRadio);
     const letterSearch = screen.getByTestId('first-letter-search-radio');
-    const btnSearch = screen.getByTestId('exec-search-btn');
+    const btnSearch = screen.getByTestId(searchBtn);
     expect(search).toBeInTheDocument();
     expect(ingrSearch).toBeInTheDocument();
     expect(nameSearch).toBeInTheDocument();
@@ -33,13 +37,13 @@ describe('teste', () => {
       <SearchBar />,
     );
 
-    const search = screen.getByTestId('search-input');
+    const search = screen.getByTestId(searchInput);
     userEvent.type(search, 'Chicken');
 
     const ingrSearch = screen.getByTestId('ingredient-search-radio');
     userEvent.click(ingrSearch);
 
-    const btnSearch = screen.getByTestId('exec-search-btn');
+    const btnSearch = screen.getByTestId(searchBtn);
     userEvent.click(btnSearch);
   });
   test('Global Alert se digitar mais de um caracter', () => {
@@ -47,8 +51,8 @@ describe('teste', () => {
       <SearchBar />,
     );
     const mockAlert = jest.spyOn(global, 'alert');
-    const search = screen.getByTestId('search-input');
-    const btnSearch = screen.getByTestId('exec-search-btn');
+    const search = screen.getByTestId(searchInput);
+    const btnSearch = screen.getByTestId(searchBtn);
     const letterSearch = screen.getByTestId('first-letter-search-radio');
 
     userEvent.click(letterSearch);
@@ -82,9 +86,9 @@ describe('teste', () => {
     const searchButton = await screen.findByTestId(buttonForSearchBar);
     expect(searchButton).toBeInTheDocument();
     userEvent.click(searchButton);
-    const search = screen.getByTestId('search-input');
-    const btnSearch = screen.getByTestId('exec-search-btn');
-    const nameSearch = screen.getByTestId('name-search-radio');
+    const search = screen.getByTestId(searchInput);
+    const btnSearch = screen.getByTestId(searchBtn);
+    const nameSearch = screen.getByTestId(nameSearchRadio);
     userEvent.click(nameSearch);
     userEvent.type(search, 'Gohan');
     userEvent.click(btnSearch);
@@ -96,9 +100,9 @@ describe('teste', () => {
     );
 
     const mockAlert = jest.spyOn(global, 'alert');
-    const search = screen.getByTestId('search-input');
-    const btnSearch = screen.getByTestId('exec-search-btn');
-    const nameSearch = screen.getByTestId('name-search-radio');
+    const search = screen.getByTestId(searchInput);
+    const btnSearch = screen.getByTestId(searchBtn);
+    const nameSearch = screen.getByTestId(nameSearchRadio);
 
     userEvent.click(nameSearch);
     userEvent.type(search, 'xablau');
@@ -119,11 +123,11 @@ describe('teste', () => {
     expect(searchButton).toBeInTheDocument();
     userEvent.click(searchButton);
 
-    const search = screen.getByTestId('search-input');
+    const search = screen.getByTestId(searchInput);
     userEvent.type(search, 'Chicken');
-    const nameSearch = screen.getByTestId('name-search-radio');
+    const nameSearch = screen.getByTestId(nameSearchRadio);
     userEvent.click(nameSearch);
-    const btnSearch = screen.getByTestId('exec-search-btn');
+    const btnSearch = screen.getByTestId(searchBtn);
     userEvent.click(btnSearch);
 
     // const ck = await screen.findAllByTestId(/-recipe-card/);
@@ -140,11 +144,11 @@ describe('teste', () => {
     expect(searchButton).toBeInTheDocument();
     userEvent.click(searchButton);
 
-    const search = screen.getByTestId('search-input');
+    const search = screen.getByTestId(searchInput);
     userEvent.type(search, 'Chicken');
-    const nameSearch = screen.getByTestId('name-search-radio');
+    const nameSearch = screen.getByTestId(nameSearchRadio);
     userEvent.click(nameSearch);
-    const btnSearch = screen.getByTestId('exec-search-btn');
+    const btnSearch = screen.getByTestId(searchBtn);
     userEvent.click(btnSearch);
     // expect(history.location.pathname).toBe('/meals/53033');
     // const ck = await screen.findAllByTestId(/-recipe-card/);
