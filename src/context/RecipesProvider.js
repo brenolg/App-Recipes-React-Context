@@ -15,10 +15,11 @@ export default function RecipesProvider({ children }) {
   const [togleCat, setTogleCat] = useState('');
   const [path, setPath] = useState();
   const [url, setUrl] = useState('');
-  const [list, setList] = useState([]);
+  const [list, setList] = useState();
   const [listMeals, setListMeals] = useState();
   const [listDrinks, setListDrinks] = useState();
   const [drinkOrMealUrl, setDrinkOrMealUrl] = useState('meals');
+  const [btn, setBtn] = useState(false);
 
   const mealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -67,6 +68,8 @@ export default function RecipesProvider({ children }) {
     listMeals,
     listDrinks,
     list,
+    btn,
+    setBtn,
     setList,
     setListDrinks,
     setListMeals,
@@ -95,6 +98,7 @@ export default function RecipesProvider({ children }) {
     listDrinks,
     listMeals,
     list,
+    btn,
   ]);
 
   return (

@@ -33,7 +33,7 @@ function Cards() {
 
   useEffect(() => {
     setList(list);
-  }, [list]);
+  }, [setList, list]);
 
   if (loading === true) {
     <Loading />;
@@ -41,8 +41,8 @@ function Cards() {
     return (
 
       <div>
-        {
-          list.slice(0, TWELVE).map((sel, index) => (
+        { list
+          && list.slice(0, TWELVE).map((sel, index) => (
             <div
               data-testid={ `${index}-recipe-card` }
               key={ sel[`id${drinksOrMeals}`] }
@@ -59,8 +59,7 @@ function Cards() {
                 data-testid={ `${index}-card-img` }
               />
             </div>
-          ))
-        }
+          ))}
       </div>
     );
   }

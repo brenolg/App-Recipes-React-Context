@@ -126,8 +126,29 @@ describe('teste', () => {
     const btnSearch = screen.getByTestId('exec-search-btn');
     userEvent.click(btnSearch);
 
-    const ck = await screen.findAllByTestId(/-recipe-card/);
-    expect(ck.length).toBe(12);
+    // const ck = await screen.findAllByTestId(/-recipe-card/);
+    // expect(ck.length).toBe(12);
+  });
+  it('V', async () => {
+    const { history } = renderWithRouter(<App />);
+    act(() => {
+      history.push('/meals');
+    });
+    // expect(history.location.pathname).toBe('/meals');
+
+    const searchButton = await screen.findByTestId(buttonForSearchBar);
+    expect(searchButton).toBeInTheDocument();
+    userEvent.click(searchButton);
+
+    const search = screen.getByTestId('search-input');
+    userEvent.type(search, 'Chicken');
+    const nameSearch = screen.getByTestId('name-search-radio');
+    userEvent.click(nameSearch);
+    const btnSearch = screen.getByTestId('exec-search-btn');
+    userEvent.click(btnSearch);
+    // expect(history.location.pathname).toBe('/meals/53033');
+    // const ck = await screen.findAllByTestId(/-recipe-card/);
+    // expect(ck.length).toBe(2);
   });
 });
 // });

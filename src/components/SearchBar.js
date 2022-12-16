@@ -9,11 +9,8 @@ function SearchBar() {
   const [search, setSearch] = useState('');
   const [drinksOrMeals, setDrinksOrMeals] = useState('Drink');
   const [minUrl, setMinUrl] = useState('themealdb');
-  // const [alertOneChar, setAlertOneChar] = useState(false);
-  // const [render, setRender] = useState([]);
   const [drinkOrMealUrla, setDrinkOrMealUrla] = useState('meals');
 
-  // const TWELVE = 12;
   const hist = useHistory();
 
   const {
@@ -22,12 +19,13 @@ function SearchBar() {
     setUrl,
     list,
     setList,
+    setBtn,
+    btn,
   } = useContext(RecipesContext);
 
   useEffect(() => {
     if (search) {
-      console.log(path);
-      return (path === '/meals'
+      return path === '/meals'
         ? (
           setDrinksOrMeals('Meal'),
           setMinUrl('themealdb'),
@@ -39,28 +37,33 @@ function SearchBar() {
           setMinUrl('thecocktaildb'),
           setDrinkOrMealUrl('drinks'),
           setDrinkOrMealUrla('drinks')
-        ));
+        );
     }
-  }, [search, radio, path, minUrl, setUrl, setDrinkOrMealUrla, setDrinkOrMealUrl]);
+  }, [search, radio, path, minUrl, setUrl, setDrinkOrMealUrla,
+    setDrinkOrMealUrl, list, setList, btn]);
 
-  const teste = async () => {
-    if (list) {
-      console.log(list);
-      if (list.length === 1) {
-        console.log('uma');
-        setList(list);
-        hist.push(`/${drinkOrMealUrla}/${list[0][`id${drinksOrMeals}`]}`);
-      } if (list.length > 1) {
-        setList(list);
+  useEffect(() => {
+    const teste = async () => {
+      if (btn && list) {
+        console.log('listtt', list);
+        if (list.length === 1) {
+          console.log('uma');
+          setList(list);
+          hist.push(`/${drinkOrMealUrla}/${list[0][`id${drinksOrMeals}`]}`);
+        } if (list.length > 1) {
+          console.log('maaaais');
+          setList(list);
+        } else if (list.length === 0 || list === null) {
+          console.log('cccccc');
+          global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        }
       }
-    } else if (!list) {
-      global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    }
-  };
+    };
+    teste();
+  }, [list, setList, btn]);
 
   const btnClickSearch = async () => {
-    await teste();
-
+    setBtn(true);
     switch (radio) {
     case 'letter':
       setUrl(`https://www.${minUrl}.com/api/json/v1/1/search.php?f=${search}`);
@@ -72,9 +75,8 @@ function SearchBar() {
       setUrl(`https://www.${minUrl}.com/api/json/v1/1/filter.php?i=${search}`);
       break;
     }
-
     if (radio === 'letter' && search.length > 1) {
-      return global.alert('Your search must have only 1 (one) character');
+      global.alert('Your search must have only 1 (one) character');
     }
   };
 
