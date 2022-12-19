@@ -68,7 +68,7 @@ export default function Meals() {
             src={ allMeal }
             alt="categoryIcon"
           />
-
+          All
         </button>
 
         {catMeal.meals.slice(0, five).map((catM, index) => (
@@ -82,15 +82,15 @@ export default function Meals() {
               key={ index }
               type="button"
               onClick={ handleClickCategory }
-
             >
+
               <img
                 name={ catM.strCategory }
                 src={ mealsCatList[index] }
                 className="imgCategory"
                 alt='"categoryIcon"'
               />
-
+              {catM.strCategory }
             </button>
           </div>
         ))}

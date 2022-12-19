@@ -6,9 +6,9 @@ import goat from './goat.svg';
 
 const drinksCatList = [
   beef,
-  goat,
-  chicken,
   breakfast,
-  dessert];
+  chicken,
+  dessert,
+  goat];
 
 export default drinksCatList;
