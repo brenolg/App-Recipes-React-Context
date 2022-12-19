@@ -67,7 +67,7 @@ export default function Drinks() {
             src={ allDrink }
             alt="categoryIcon"
           />
-
+          All
         </button>
 
         {catDrink.drinks.slice(0, five).map((catD, index) => (
@@ -89,7 +89,7 @@ export default function Drinks() {
                 className="imgCategory"
                 alt='"categoryIcon"'
               />
-
+              { catD.strCategory }
             </button>
           </div>
         ))}

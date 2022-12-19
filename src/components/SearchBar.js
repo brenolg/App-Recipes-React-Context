@@ -1,95 +1,83 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './SearchBar.css'; // Css just for dark theme.
 import { useHistory } from 'react-router-dom';
+import RecipesContext from '../context/RecipesContext';
+import Cards from './Cards';
 
 function SearchBar() {
   const [radio, setRadio] = useState('.');
   const [search, setSearch] = useState('');
-  const [url, setUrl] = useState('');
-  const [drinksOrMeals, setDrinksOrMeals] = useState('drinks');
-  const [listMeals, setListMeals] = useState();
-  const [listDrinks, setListDrinks] = useState();
-  const [alertOneChar, setAlertOneChar] = useState(false);
-  const [render, setRender] = useState([]);
+  const [drinksOrMeals, setDrinksOrMeals] = useState('Drink');
+  const [minUrl, setMinUrl] = useState('themealdb');
+  const [drinkOrMealUrla, setDrinkOrMealUrla] = useState('meals');
 
-  const TWELVE = 12;
-  const path = window.location.pathname;
   const hist = useHistory();
 
+  const {
+    path,
+    setDrinkOrMealUrl,
+    setUrl,
+    list,
+    setList,
+    setBtn,
+    btn,
+  } = useContext(RecipesContext);
+
   useEffect(() => {
-    const fetchPlanetList = async () => {
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        setListMeals(data.meals);
-        setListDrinks(data.drinks);
-      } catch (error) {
-        console.log(error);
+    if (search) {
+      return path === '/meals'
+        ? (
+          setDrinksOrMeals('Meal'),
+          setMinUrl('themealdb'),
+          setDrinkOrMealUrl('meals'),
+          setDrinkOrMealUrla('meals')
+        )
+        : (
+          setDrinksOrMeals('Drink'),
+          setMinUrl('thecocktaildb'),
+          setDrinkOrMealUrl('drinks'),
+          setDrinkOrMealUrla('drinks')
+        );
+    }
+  }, [search, radio, path, minUrl, setUrl, setDrinkOrMealUrla,
+    setDrinkOrMealUrl, list, setList, btn]);
+
+  useEffect(() => {
+    const teste = async () => {
+      if (btn && list) {
+        console.log('listtt', list);
+        if (list.length === 1) {
+          console.log('uma');
+          setList(list);
+          hist.push(`/${drinkOrMealUrla}/${list[0][`id${drinksOrMeals}`]}`);
+        } if (list.length > 1) {
+          console.log('maaaais');
+          setList(list);
+        } else if (list.length === 0 || list === null) {
+          console.log('cccccc');
+          global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        }
       }
     };
-    fetchPlanetList();
-    // Make the request after clicking the search
-    // button and not when clicking the radio
-  }, [url]);
+    teste();
+  }, [list, setList, btn]);
 
-  useEffect(() => {
-    if (path === '/meals' && search !== undefined) {
-      setDrinksOrMeals('meals');
-      switch (radio) {
-      case 'ingredient':
-        setUrl(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${search}`);
-        break;
-      case 'name':
-        setUrl(`https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`);
-        break;
-      case 'letter':
-        return (search.length <= 1)
-          ? setUrl(`https://www.themealdb.com/api/json/v1/1/search.php?f=${search}`)
-          : setAlertOneChar(true);
-      default:
-      }
+  const btnClickSearch = async () => {
+    setBtn(true);
+    switch (radio) {
+    case 'letter':
+      setUrl(`https://www.${minUrl}.com/api/json/v1/1/search.php?f=${search}`);
+      break;
+    case 'name':
+      setUrl(`https://www.${minUrl}.com/api/json/v1/1/search.php?s=${search}`);
+      break;
+    default:
+      setUrl(`https://www.${minUrl}.com/api/json/v1/1/filter.php?i=${search}`);
+      break;
     }
-
-    if (path === '/drinks' && search !== undefined) {
-      setDrinksOrMeals('drinks');
-      switch (radio) {
-      case 'ingredient':
-        setUrl(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${search}`);
-        break;
-      case 'name':
-        setUrl(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`);
-        break;
-      case 'letter':
-        return (search.length <= 1)
-          ? setUrl(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${search}`)
-          : setAlertOneChar(true);
-      default:
-      }
+    if (radio === 'letter' && search.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
     }
-  }, [search, radio, path]);
-
-  const btnClickSearch = () => {
-    if (path === '/meals' && listMeals) {
-      if (listMeals.length === 1) {
-        return hist.push(`/meals/${listMeals[0].idMeal}`);
-      } if (listMeals.length > 1) {
-        return setRender(listMeals);
-      }
-    } else if (!listDrinks) {
-      global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    }
-
-    if (path === '/drinks' && listDrinks) {
-      if (listDrinks.length === 1) {
-        return hist.push(`/drinks/${listDrinks[0].idDrink}`);
-      } if (listDrinks.length > 1) {
-        return setRender(listDrinks);
-      }
-    } else if (!listDrinks) {
-      global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    }
-
-    return alertOneChar && global.alert('Your search must have only 1 (one) character');
   };
 
   return (
@@ -109,7 +97,7 @@ function SearchBar() {
             name="radio"
             id="ingredient"
             value="ingredient"
-            onChange={ (e) => setRadio(e.target.value) }
+            onChange={ () => setRadio('ingredient') }
             data-testid="ingredient-search-radio"
           />
           Ingredient
@@ -120,7 +108,7 @@ function SearchBar() {
             name="radio"
             id="name"
             value="name"
-            onChange={ (e) => setRadio(e.target.value) }
+            onChange={ () => setRadio('name') }
             data-testid="name-search-radio"
           />
           Name
@@ -132,7 +120,7 @@ function SearchBar() {
             id="letter"
             value="letter"
             maxLength="1"
-            onChange={ (e) => setRadio(e.target.value) }
+            onChange={ () => setRadio('letter') }
             data-testid="first-letter-search-radio"
           />
           First Letter
@@ -149,41 +137,27 @@ function SearchBar() {
 
       </div>
       <div>
-        { ((drinksOrMeals === 'meals') ? (
-          render.slice(0, TWELVE).map((sel, index) => (
+        <Cards />
+        {/* {
+          list.slice(0, TWELVE).map((sel, index) => (
             <div
               data-testid={ `${index}-recipe-card` }
-              key={ sel.idMeal }
+              key={ sel[`id${drinksOrMeals}`] }
             >
+
               <p
                 data-testid={ `${index}-card-name` }
               >
-                { sel.strMeal }
+                { sel[`str${drinksOrMeals}`] }
               </p>
               <img
-                src={ sel.strMealThumb }
-                alt={ sel.strMealThumb }
+                src={ sel[`str${drinksOrMeals}Thumb`] }
+                alt={ sel[`str${drinksOrMeals}Thumb`] }
                 data-testid={ `${index}-card-img` }
               />
             </div>
-          ))) : (
-          render.slice(0, TWELVE).map((sel, index) => (
-            <div
-              data-testid={ `${index}-recipe-card` }
-              key={ sel.idDrink }
-            >
-              <p
-                data-testid={ `${index}-card-name` }
-              >
-                { sel.strDrink }
-              </p>
-              <img
-                src={ sel.strDrinkThumb }
-                alt={ sel.strDrinkThumb }
-                data-testid={ `${index}-card-img` }
-              />
-            </div>
-          ))))}
+          ))
+        } */}
       </div>
     </div>
   );

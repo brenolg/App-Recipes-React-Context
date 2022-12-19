@@ -18,11 +18,14 @@
   align-items: center;
   background-color: transparent;
   border: none;
+  color: aliceblue;
   display: flex;
+  flex-direction: column;
+  font-size: 9px;
 }
 
 .imgCategory {
-  max-height: 70px;
+  height: 35px;
   width: 35px;
 }
 

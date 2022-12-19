@@ -1,8 +1,8 @@
-const fetchRecipes = async (url, category) => {
+const fetchRecipes = async (url, param) => {
   const newCategory = () => {
-    if (category === undefined) {
+    if (param === undefined) {
       return '';
-    } return category;
+    } return param;
   };
 
   const response = await fetch(url + newCategory());
