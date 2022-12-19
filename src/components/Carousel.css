@@ -1,32 +1,34 @@
 .cardsSectionF {
-    flex-flow: nowrap;
-    display: flex;
-    flex-direction: row;
-    overflow: auto;
-    padding-bottom: 7vh;
-    width: 360px;
-  }
-  
-.cardContainerF { 
-    display: flex; 
-    flex-direction: column;
-    width: 182px;
-    padding: 7vh 3vw 3vw 4vh;
-    
-}  
-  
-  .imgRecipesF {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    width: 100%;
-    
-  }
-  
-  .detailsCardsF {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    width: 180px;
-    
-    
-  }
-  
+  display: flex;
+  flex-flow: nowrap;
+  flex-direction: row;
+  overflow: auto;
+  padding-bottom: 7vh;
+  width: 360px;
+}
+
+.cardContainerF {
+  display: flex;
+  flex-direction: column;
+  padding: 7vh 3vw 3vw 4vh;
+  width: 182px;
+}
+
+.imgRecipesF {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 100%;
+}
+
+.detailsCardsF {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 180px;
+
+}
+
+.startBtn {
+  bottom: 0;
+  position: fixed;
+  width: 360px;
+}
