@@ -8,11 +8,11 @@ function RecipeInProgressDrinkBody() {
   const { drinks, loading } = useContext(RecipesContext);
   const history = useHistory();
   const { pathname } = history.location;
-  const [ingredientChecked, setIngredientChecked] = useState({});
+  const [ingredientChecked, setIngredientChecked] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   useEffect(() => {
     const savedFlags = JSON.parse(localStorage.getItem('inProgressRecipe'));
-    console.log(savedFlags);
     if (!loading) {
       const selectedDrink = drinks.drinks
         .filter((drink) => pathname.includes(drink.idDrink));
@@ -38,6 +38,29 @@ function RecipeInProgressDrinkBody() {
 
   useEffect(() => {
     localStorage.setItem('inProgressRecipe', JSON.stringify(ingredientChecked));
+  }, [ingredientChecked]);
+
+  useEffect(() => {
+    if (!loading) {
+      const selectedDrink = drinks.drinks
+        .filter((drink) => pathname.includes(drink.idDrink));
+
+      const ingredientsIncludingNulls = Object
+        .values(Object.fromEntries(Object.entries(selectedDrink['0'])
+          .filter(([key]) => key.includes('strIngredient'))));
+
+      const ingredientsExcludingNulls = ingredientsIncludingNulls
+        .filter((ingredient) => ingredient !== null && ingredient !== '');
+
+      if (Object.values(ingredientChecked)
+        .every((ingredient) => ingredient)
+        && Object.keys(ingredientChecked).length === Object.keys(ingredientsExcludingNulls
+          .length)) {
+        setIsButtonDisabled(false);
+      } else {
+        setIsButtonDisabled(true);
+      }
+    }
   }, [ingredientChecked]);
 
   if (loading) return (<Loading />);
@@ -112,6 +135,7 @@ function RecipeInProgressDrinkBody() {
             <button
               type="button"
               data-testid="finish-recipe-btn"
+              disabled={ isButtonDisabled }
             >
               finish recipe
             </button>
