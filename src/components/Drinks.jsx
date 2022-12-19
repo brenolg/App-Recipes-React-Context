@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import requestApi from '../services/requestAPI';
@@ -106,21 +106,22 @@ export default function Drinks() {
               data-testid={ `${index}-recipe-card` }
               key={ index }
             >
-
-              <img
-                className="imgRecipes"
-                data-testid={ `${index}-card-img` }
-                alt={ drink.strDrink }
-                src={ drink.strDrinkThumb }
-              />
-              <button
-                className="detailsCards"
-                data-testid={ `${index}-card-name` }
-                type="button"
-                onClick={ () => handleDrinksDetails(drink.idDrink) }
-              >
-                {drink.strDrink}
-              </button>
+              <Link to={ `/drinks/${drink.idDrink}` }>
+                <img
+                  className="imgRecipes"
+                  data-testid={ `${index}-card-img` }
+                  alt={ drink.strDrink }
+                  src={ drink.strDrinkThumb }
+                />
+                <button
+                  className="detailsCards"
+                  data-testid={ `${index}-card-name` }
+                  type="button"
+                  // onClick={ () => handleDrinksDetails(drink.idDrink) }
+                >
+                  {drink.strDrink}
+                </button>
+              </Link>
             </div>
 
           ))}
@@ -138,21 +139,22 @@ export default function Drinks() {
               data-testid={ `${index}-recipe-card` }
               key={ index }
             >
-
-              <img
-                className="imgRecipes"
-                data-testid={ `${index}-card-img` }
-                alt={ drinkC.strDrink }
-                src={ drinkC.strDrinkThumb }
-              />
-              <button
-                className="detailsCards"
-                data-testid={ `${index}-card-name` }
-                type="button"
-                onClick={ () => handleDrinksDetails(drinkC.idDrink) }
-              >
-                {drinkC.strDrink}
-              </button>
+              <Link to={ `/drinks/${drinkC.idDrink}` }>
+                <img
+                  className="imgRecipes"
+                  data-testid={ `${index}-card-img` }
+                  alt={ drinkC.strDrink }
+                  src={ drinkC.strDrinkThumb }
+                />
+                <button
+                  className="detailsCards"
+                  data-testid={ `${index}-card-name` }
+                  type="button"
+                  onClick={ () => handleDrinksDetails(drinkC.idDrink) }
+                >
+                  {drinkC.strDrink}
+                </button>
+              </Link>
             </div>
           ))}
 
