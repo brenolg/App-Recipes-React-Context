@@ -1,12 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import Carousel from '../components/Carousel';
+import RecipesContext from '../context/RecipesContext';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+// import Footer from '../components/Footer';
+
 import Loading from '../components/Loading';
 import IngredientsList from '../components/IngredientsList';
 
 function RecipesDetails() {
   const history = useHistory();
+  const { setPath } = useContext(RecipesContext);
   const [recipe, setRecipe] = useState(); // guarda a receita
   const [weight, setWeight] = useState(); // guarda os pesos dos ingredients
   const [ingredients, setIngredients] = useState([]); // guarda os ingredients
@@ -14,6 +18,19 @@ function RecipesDetails() {
   const { pathname } = history.location;
   const pathSplit = pathname.split('/');
   const type = pathSplit[1]; // Tipo Meals ou Drinks
+
+  useEffect(() => {
+    const pathLocation = window.location.pathname;
+    console.log(pathLocation);
+    if (pathLocation.includes('drinks')) {
+      console.log('drink');
+      setPath('/drinks');
+    }
+    if (pathLocation.includes('meals')) {
+      console.log('meal');
+      setPath('/meals');
+    }
+  }, []);
 
   const removeEmptyAttrs = (objMapped) => {
     const obj = objMapped[type];
@@ -118,7 +135,8 @@ function RecipesDetails() {
           )
         }
       </div>
-      <Footer />
+      <Carousel />
+      {/* <Footer /> */}
     </div>
   );
 }
