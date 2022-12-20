@@ -63,3 +63,17 @@ describe('Teste da página Profile e suas funcionalidades', () => {
     expect(pathname).toBe('/');
   });
 });
+
+describe('Test do Profile sem mock no LocalStorage', () => {
+  test('Verifica se rederiza um e-mail vazio quando não existir', () => {
+    renderWithRouter(
+      <RecipesProvider>
+        <Profile />
+      </RecipesProvider>,
+    );
+
+    const emailTestId = screen.getByTestId('profile-email');
+    expect(emailTestId).toBeInTheDocument();
+    expect(emailTestId.innerHTML).toBe('E-mail: ');
+  });
+});

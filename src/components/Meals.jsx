@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import requestApi from '../services/requestAPI';
@@ -68,7 +68,7 @@ export default function Meals() {
             src={ allMeal }
             alt="categoryIcon"
           />
-
+          All
         </button>
 
         {catMeal.meals.slice(0, five).map((catM, index) => (
@@ -82,15 +82,15 @@ export default function Meals() {
               key={ index }
               type="button"
               onClick={ handleClickCategory }
-
             >
+
               <img
                 name={ catM.strCategory }
                 src={ mealsCatList[index] }
                 className="imgCategory"
                 alt='"categoryIcon"'
               />
-
+              {catM.strCategory }
             </button>
           </div>
         ))}
@@ -101,28 +101,29 @@ export default function Meals() {
         <section className="cardsSection">
 
           {catFilter.meals.slice(0, twelve).map((mealC, index) => (
-
             <div
               className="cardContainer"
               data-testid={ `${index}-recipe-card` }
               key={ index }
             >
-
-              <img
-                className="imgRecipes"
-                data-testid={ `${index}-card-img` }
-                alt={ mealC.strMeal }
-                src={ mealC.strMealThumb }
-              />
-              <button
-                className="detailsCards"
-                data-testid={ `${index}-card-name` }
-                type="button"
-                onClick={ () => handleMealsDetails(mealC.idMeal) }
-              >
-                {mealC.strMeal}
-              </button>
+              <Link to={ `/meals/${mealC.idMeal}` }>
+                <img
+                  className="imgRecipes"
+                  data-testid={ `${index}-card-img` }
+                  alt={ mealC.strMeal }
+                  src={ mealC.strMealThumb }
+                />
+                <button
+                  className="detailsCards"
+                  data-testid={ `${index}-card-name` }
+                  type="button"
+                  // onClick={ () => handleMealsDetails(mealC.idMeal) }
+                >
+                  {mealC.strMeal}
+                </button>
+              </Link>
             </div>
+
           ))}
 
         </section>
@@ -138,21 +139,22 @@ export default function Meals() {
               data-testid={ `${index}-recipe-card` }
               key={ index }
             >
-
-              <img
-                className="imgRecipes"
-                data-testid={ `${index}-card-img` }
-                alt={ meal.strMeal }
-                src={ meal.strMealThumb }
-              />
-              <button
-                className="detailsCards"
-                data-testid={ `${index}-card-name` }
-                type="button"
-                onClick={ () => handleMealsDetails(meal.idMeal) }
-              >
-                {meal.strMeal}
-              </button>
+              <Link to={ `/meals/${meal.idMeal}` }>
+                <img
+                  className="imgRecipes"
+                  data-testid={ `${index}-card-img` }
+                  alt={ meal.strMeal }
+                  src={ meal.strMealThumb }
+                />
+                <button
+                  className="detailsCards"
+                  data-testid={ `${index}-card-name` }
+                  type="button"
+                  // onClick={ () => handleMealsDetails(meal.idMeal) }
+                >
+                  {meal.strMeal}
+                </button>
+              </Link>
             </div>
           ))}
 
