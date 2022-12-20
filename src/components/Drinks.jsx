@@ -117,7 +117,6 @@ export default function Drinks() {
                   className="detailsCards"
                   data-testid={ `${index}-card-name` }
                   type="button"
-                  // onClick={ () => handleDrinksDetails(drink.idDrink) }
                 >
                   {drink.strDrink}
                 </button>
