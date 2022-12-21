@@ -39,14 +39,7 @@ function Carousel() {
               </Link>
             </div>
           ))}
-          <button
-            className="startBtn"
-            data-testid="start-recipe-btn"
-            type="button"
-          >
-            Start Recipe
 
-          </button>
         </section>
 
       );
@@ -82,15 +75,6 @@ function Carousel() {
             </Link>
           </div>
         ))}
-
-        <button
-          className="startBtn"
-          data-testid="start-recipe-btn"
-          type="button"
-        >
-          Start Recipe
-
-        </button>
 
       </section>
     );
