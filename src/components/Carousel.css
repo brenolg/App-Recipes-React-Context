@@ -27,8 +27,16 @@
 
 }
 
-.startBtn {
+.visible {
   bottom: 0;
   position: fixed;
+  visibility: visible;
+  width: 360px;
+}
+
+.invisible {
+  bottom: 0;
+  position: fixed;
+  visibility: hidden;
   width: 360px;
 }

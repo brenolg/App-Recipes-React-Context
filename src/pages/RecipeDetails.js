@@ -1,15 +1,16 @@
 import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Carousel from '../components/Carousel';
 import RecipesContext from '../context/RecipesContext';
 import Header from '../components/Header';
-// import Footer from '../components/Footer';
-
 import Loading from '../components/Loading';
+import DetailsBtn from '../components/DetailsBtn';
 import IngredientsList from '../components/IngredientsList';
 
 function RecipesDetails() {
   const history = useHistory();
+
   const { setPath } = useContext(RecipesContext);
   const [recipe, setRecipe] = useState(); // guarda a receita
   const [weight, setWeight] = useState(); // guarda os pesos dos ingredients
@@ -21,13 +22,10 @@ function RecipesDetails() {
 
   useEffect(() => {
     const pathLocation = window.location.pathname;
-    console.log(pathLocation);
     if (pathLocation.includes('drinks')) {
-      console.log('drink');
       setPath('/drinks');
     }
     if (pathLocation.includes('meals')) {
-      console.log('meal');
       setPath('/meals');
     }
   }, []);
@@ -76,6 +74,7 @@ function RecipesDetails() {
       fetchIdRecipe(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
     }
   }, []);
+
   return (
     <div>
       <Header />
@@ -136,9 +135,16 @@ function RecipesDetails() {
         }
       </div>
       <Carousel />
-      {/* <Footer /> */}
+      <DetailsBtn />
+
     </div>
   );
 }
+
+RecipesDetails.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+}.isRequired;
 
 export default RecipesDetails;
