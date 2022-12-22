@@ -50,11 +50,10 @@ describe('Teste da rota Drinks', () => {
     userEvent.click(screen.getByTestId(drinkTestId));
     await screen.findByText('GG');
 
-    const btnShake = screen.getByRole('button', { name: /cocoa/i });
-    userEvent.click(btnShake);
+    const btnCocoa = screen.getByRole('button', { name: /cocoa/i });
+    userEvent.click(btnCocoa);
 
     await screen.findByText('Chocolate Beverage');
-
     const shake = screen.getByRole('img', { name: /Orange Scented Hot Chocolate/i });
     expect(shake).toBeInTheDocument();
   });
@@ -73,7 +72,6 @@ describe('Teste da rota Drinks', () => {
 
     userEvent.click(screen.getByTestId(drinkTestId));
     await screen.findByText('GG');
-    screen.logTestingPlaygroundURL();
 
     const secondImg = screen.getByRole('img', { name: /a1/i });
     userEvent.click(secondImg);
