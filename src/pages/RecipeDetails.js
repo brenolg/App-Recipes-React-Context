@@ -11,7 +11,7 @@ import IngredientsList from '../components/IngredientsList';
 function RecipesDetails() {
   const history = useHistory();
 
-  const { setPath } = useContext(RecipesContext);
+  const { path, setPath } = useContext(RecipesContext);
   const [recipe, setRecipe] = useState(); // guarda a receita
   const [weight, setWeight] = useState(); // guarda os pesos dos ingredients
   const [ingredients, setIngredients] = useState([]); // guarda os ingredients
@@ -28,7 +28,7 @@ function RecipesDetails() {
     if (pathLocation.includes('meals')) {
       setPath('/meals');
     }
-  }, []);
+  }, [path, setPath]);
 
   const removeEmptyAttrs = (objMapped) => {
     const obj = objMapped[type];
@@ -103,7 +103,6 @@ function RecipesDetails() {
                   height="315"
                   src={ `https://www.youtube.com/embed/${codeVideo}` }
                   title="YouTube video player"
-                  frameBorder="0"
                   allowFullScreen
                   data-testid="video"
                 />
