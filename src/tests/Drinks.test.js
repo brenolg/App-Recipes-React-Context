@@ -37,10 +37,10 @@ describe('Teste da rota Drinks', () => {
     expect(history.location.pathname).toBe('/drinks');
 
     expect(global.fetch).toHaveBeenCalled();
-    expect(global.fetch).toHaveBeenCalledTimes(4);
+    expect(global.fetch).toHaveBeenCalledTimes(10);
   });
 
-  test('Testa renderização de categories Drinks apos clicar duas vezes na mesma categoria', async () => {
+  test('Testa renderização de categories Drinks apos clicar na categoria', async () => {
     renderWithRouter(
       <RecipesProvider>
         <Recipes />
@@ -50,37 +50,34 @@ describe('Teste da rota Drinks', () => {
     userEvent.click(screen.getByTestId(drinkTestId));
     await screen.findByText('GG');
 
-    const btnShake = screen.getByRole('button', { name: /shake/i });
+    const btnShake = screen.getByRole('button', { name: /cocoa/i });
     userEvent.click(btnShake);
 
-    await screen.findByText('151 Florida Bushwacker');
+    await screen.findByText('Chocolate Beverage');
 
-    const shake = screen.getByRole('img', { name: /Black Forest Shake/i });
+    const shake = screen.getByRole('img', { name: /Orange Scented Hot Chocolate/i });
     expect(shake).toBeInTheDocument();
+  });
 
-    const btnShake2 = screen.getByRole('button', { name: /shake/i });
-    userEvent.click(btnShake2);
+  test('Testa se ao clicar no botão detalhes o path é trocado', async () => {
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <Recipes />
+      </RecipesProvider>,
+    );
     await screen.findByText('Corba');
-    expect(shake).not.toBeInTheDocument();
+
+    act(() => {
+      history.push('/meals');
+    });
+
+    userEvent.click(screen.getByTestId(drinkTestId));
+    await screen.findByText('GG');
+    screen.logTestingPlaygroundURL();
+
+    const secondImg = screen.getByRole('img', { name: /a1/i });
+    userEvent.click(secondImg);
+
+    expect(history.location.pathname).toBe('/drinks/17222');
   });
 });
-
-// Teste precisaria de um await da pagina de detalhes para funcionar
-// test('Testa se ao clicar no botão detalhes o path é trocado', async () => {
-//   const { history } = renderWithRouter(
-//     <RecipesProvider>
-//       <Recipes />
-//     </RecipesProvider>,
-//   );
-
-//   act(() => {
-//     history.push('/meals');
-//   });
-
-//   await screen.findByText('Corba');
-
-//   const detailsBtn = screen.getAllByRole('button', { name: /detalhes/i });
-//   userEvent.click(detailsBtn[0]);
-
-//   expect(history.location.pathname).toBe('/meals/17222');
-// });

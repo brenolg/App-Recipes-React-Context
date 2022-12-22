@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import requestApi from '../services/requestAPI';
@@ -8,7 +8,6 @@ import drinksCatList from '../images/drinksCatList';
 import allDrink from '../images/allDrink.svg';
 
 export default function Drinks() {
-  const history = useHistory();
   const {
     drinks,
     catDrink,
@@ -43,9 +42,6 @@ export default function Drinks() {
 
   const deleteFilterCat = () => {
     setFilterSwitch(false);
-  };
-  const handleDrinksDetails = (id) => {
-    history.push(`/drinks/${id}`);
   };
 
   const twelve = 12;
@@ -149,7 +145,7 @@ export default function Drinks() {
                   className="detailsCards"
                   data-testid={ `${index}-card-name` }
                   type="button"
-                  onClick={ () => handleDrinksDetails(drinkC.idDrink) }
+
                 >
                   {drinkC.strDrink}
                 </button>
