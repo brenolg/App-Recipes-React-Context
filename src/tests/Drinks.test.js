@@ -1,10 +1,10 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
-import fetch from '../../cypress/mocks/fetch';
 import renderWithRouter from './renderWithRouter';
 import Recipes from '../pages/Recipes';
 import RecipesProvider from '../context/RecipesProvider';
+import fetch from './mocks/fetch';
 
 describe('Teste da rota Drinks', () => {
   const drinkTestId = 'drinks-bottom-btn';
@@ -37,7 +37,7 @@ describe('Teste da rota Drinks', () => {
     expect(history.location.pathname).toBe('/drinks');
 
     expect(global.fetch).toHaveBeenCalled();
-    expect(global.fetch).toHaveBeenCalledTimes(10);
+    expect(global.fetch).toHaveBeenCalledTimes(14);
   });
 
   test('Testa renderização de categories Drinks apos clicar na categoria', async () => {

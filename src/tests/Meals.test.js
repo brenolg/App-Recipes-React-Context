@@ -3,8 +3,8 @@ import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import Recipes from '../pages/Recipes';
-import fetch from '../../cypress/mocks/fetch';
 import RecipesProvider from '../context/RecipesProvider';
+import fetch from './mocks/fetch';
 
 describe('Teste da rota Meals', () => {
   beforeEach(() => {
@@ -33,7 +33,7 @@ describe('Teste da rota Meals', () => {
     expect(history.location.pathname).toBe('/meals');
 
     expect(global.fetch).toHaveBeenCalled();
-    expect(global.fetch).toHaveBeenCalledTimes(10);
+    expect(global.fetch).toHaveBeenCalledTimes(14);
   });
 
   test('Testa renderização de categories Meals apos clicar na categoria', async () => {
@@ -48,15 +48,17 @@ describe('Teste da rota Meals', () => {
     });
 
     const kumpir = await screen.findByText('Kumpir');
+    screen.logTestingPlaygroundURL();
     expect(kumpir).toBeInTheDocument();
-    const btnBeef = screen.getByRole('button', { name: /beef/i });
-    userEvent.click(btnBeef);
+    const btnBreakFast = screen.getByRole('button', { name: /breakfast/i });
+    userEvent.click(btnBreakFast);
 
-    await screen.findByText('Beef and Oyster pie');
+    // await screen.findByText('Breakfast Potatoes');
+    // screen.logTestingPlaygroundURL();
 
-    const brisket = screen.getByRole('img', { name: /beef brisket pot roast/i });
-    expect(brisket).toBeInTheDocument();
-    expect(kumpir).not.toBeInTheDocument();
+    // const brisket = screen.getByRole('img', { name: /Beef and Mustard Pie/i });
+    // expect(brisket).toBeInTheDocument();
+    // expect(kumpir).not.toBeInTheDocument();
   });
 
   test('Testa se ao clicar no botão detalhes o path é trocado', async () => {
@@ -78,5 +80,3 @@ describe('Teste da rota Meals', () => {
     expect(history.location.pathname).toBe('/meals/52978');
   });
 });
-
-// screen.logTestingPlaygroundURL();
