@@ -6,13 +6,12 @@ import RecipesContext from './RecipesContext';
 export default function RecipesProvider({ children }) {
   const [drinks, setDrinks] = useState([]);
   const [meals, setMeals] = useState([]);
+  const [renderDrinks, setRenderDrinks] = useState([]);
+  const [renderMeals, setRenderMeals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [catDrink, setCatDrink] = useState([]);
   const [catMeal, setCatMeal] = useState([]);
   const [searchInput, setSearchInput] = useState(false);
-  const [filterSwitch, setFilterSwitch] = useState(false);
-  const [catFilter, setCatFilter] = useState([]);
-  const [togleCat, setTogleCat] = useState('');
   const [path, setPath] = useState();
   const [url, setUrl] = useState('');
   const [list, setList] = useState();
@@ -20,6 +19,7 @@ export default function RecipesProvider({ children }) {
   const [listDrinks, setListDrinks] = useState();
   const [drinkOrMealUrl, setDrinkOrMealUrl] = useState('meals');
   const [btn, setBtn] = useState(false);
+  const [togleCat, setTogleCat] = useState('');
 
   const mealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -29,7 +29,9 @@ export default function RecipesProvider({ children }) {
   useEffect(() => {
     async function fetch() {
       setDrinks(await fetchRecipes(drinkUrl));
+      setRenderDrinks(await fetchRecipes(drinkUrl));
       setMeals(await fetchRecipes(mealsUrl));
+      setRenderMeals(await fetchRecipes(mealsUrl));
       setCatDrink(await fetchRecipes(catDrinkUrl));
       setCatMeal(await fetchRecipes(catMealUrl));
       setLoading(false);
@@ -60,23 +62,23 @@ export default function RecipesProvider({ children }) {
     meals,
     loading,
     searchInput,
-    filterSwitch,
-    catFilter,
-    togleCat,
     path,
     url,
     listMeals,
     listDrinks,
     list,
     btn,
+    renderDrinks,
+    renderMeals,
+    togleCat,
+    setTogleCat,
+    setRenderMeals,
+    setRenderDrinks,
     setBtn,
     setList,
     setListDrinks,
     setListMeals,
     setUrl,
-    setTogleCat,
-    setCatFilter,
-    setFilterSwitch,
     setDrinks,
     setMeals,
     setSearchInput,
@@ -90,15 +92,15 @@ export default function RecipesProvider({ children }) {
     catDrink,
     catMeal,
     searchInput,
-    filterSwitch,
-    catFilter,
-    togleCat,
     path,
     url,
     listDrinks,
     listMeals,
     list,
     btn,
+    renderDrinks,
+    renderMeals,
+    togleCat,
   ]);
 
   return (

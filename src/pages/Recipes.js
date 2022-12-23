@@ -1,12 +1,11 @@
 import { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import Loading from '../components/Loading';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import Meals from '../components/Meals';
-import Drinks from '../components/Drinks';
+import MealsT from '../components/MealsT';
+import DrinksT from '../components/DrinksT';
 
 export default function Recipes() {
   const history = useHistory();
@@ -39,7 +38,7 @@ export default function Recipes() {
 
           {!searchInput && (
             <div>
-              <Drinks />
+              <DrinksT/>
             </div>
           )}
 
@@ -62,7 +61,7 @@ export default function Recipes() {
 
         {!searchInput && (
           <div>
-            <Meals />
+            <MealsT />
           </div>
         )}
 
@@ -72,7 +71,3 @@ export default function Recipes() {
     );
   }
 }
-Recipes.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }) }.isRequired;
