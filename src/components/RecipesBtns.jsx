@@ -1,21 +1,41 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import requestApi from '../services/requestAPI';
 import './meals&drinks.css';
 import drinksCatList from '../images/drinksCatList';
 import allDrink from '../images/allDrink.svg';
+import mealsCatList from '../images/mealsCatList';
+import allMeal from '../images/allMeal.svg';
 
-export default function DrinksT() {
+export default function RecipesBtns() {
   const {
     drinks,
-    catDrink,
+    meals,
     setLoading,
-    renderDrinks,
     setRenderDrinks,
+    setRenderMeals,
+    path,
+    catMeal,
+    catDrink,
     togleCat,
     setTogleCat,
   } = useContext(RecipesContext);
+
+  const catMealUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
+
+  const mealCategory = async (target) => {
+    if (togleCat === '' || togleCat !== target.name) {
+      setTogleCat(target.name);
+      setLoading(true);
+      const mealsFilter = await requestApi(catMealUrl, target.name);
+      setRenderMeals(mealsFilter);
+      setLoading(false);
+    } if (togleCat === 'Beef' || togleCat === 'Breakfast' || togleCat === 'Chicken'
+     || togleCat === 'Dessert' || togleCat === 'Goat') {
+      setRenderMeals(meals);
+      setTogleCat('');
+    }
+  };
 
   const catDrinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
 
@@ -37,18 +57,25 @@ export default function DrinksT() {
   };
 
   const handleClickCategory = async ({ target }) => {
-    drinkCategory(target);
+    if (path === '/meals') {
+      mealCategory(target);
+    } else {
+      drinkCategory(target);
+    }
   };
 
   const deleteFilterCat = () => {
-    setRenderDrinks(drinks);
+    if (path === '/meals') {
+      setRenderMeals(meals);
+    } else {
+      setRenderDrinks(drinks);
+    }
   };
 
-  const twelve = 12;
   const five = 5;
-  return (
 
-    <main className="mainRecipes">
+  if (path === '/drinks') {
+    return (
 
       <nav className="navRecipes">
 
@@ -90,37 +117,49 @@ export default function DrinksT() {
           </div>
         ))}
       </nav>
+    );
+  }
 
-      <section className="cardsSection">
+  return (
 
-        {renderDrinks.drinks.slice(0, twelve).map((drinkC, index) => (
+    <nav className="navRecipes">
+      <button
+        className="categoryRecipes"
+        data-testid="All-category-filter"
+        type="button"
+        onClick={ deleteFilterCat }
+      >
+        <img
+          className="imgCategory"
+          src={ allMeal }
+          alt="categoryIcon"
+        />
+        All
+      </button>
 
-          <div
-            className="cardContainer"
-            data-testid={ `${index}-recipe-card` }
+      {catMeal.meals.slice(0, five).map((catM, index) => (
+        <div
+          key={ index }
+        >
+          <button
+            className="categoryRecipes"
+            data-testid={ `${catM.strCategory}-category-filter` }
+            name={ catM.strCategory }
             key={ index }
+            type="button"
+            onClick={ handleClickCategory }
           >
-            <Link to={ `/drinks/${drinkC.idDrink}` }>
-              <img
-                className="imgRecipes"
-                data-testid={ `${index}-card-img` }
-                alt={ drinkC.strDrink }
-                src={ drinkC.strDrinkThumb }
-              />
-              <button
-                className="detailsCards"
-                data-testid={ `${index}-card-name` }
-                type="button"
 
-              >
-                {drinkC.strDrink}
-              </button>
-            </Link>
-          </div>
-        ))}
-
-      </section>
-
-    </main>
+            <img
+              name={ catM.strCategory }
+              src={ mealsCatList[index] }
+              className="imgCategory"
+              alt='"categoryIcon"'
+            />
+            {catM.strCategory }
+          </button>
+        </div>
+      ))}
+    </nav>
   );
 }

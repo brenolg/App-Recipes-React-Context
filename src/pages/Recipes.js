@@ -4,8 +4,8 @@ import RecipesContext from '../context/RecipesContext';
 import Loading from '../components/Loading';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import MealsT from '../components/MealsT';
-import DrinksT from '../components/DrinksT';
+import Meals from '../components/Meals';
+import Drinks from '../components/Drinks';
 
 export default function Recipes() {
   const history = useHistory();
@@ -38,7 +38,7 @@ export default function Recipes() {
 
           {!searchInput && (
             <div>
-              <DrinksT/>
+              <Drinks />
             </div>
           )}
 
@@ -61,7 +61,7 @@ export default function Recipes() {
 
         {!searchInput && (
           <div>
-            <MealsT />
+            <Meals />
           </div>
         )}
 

@@ -1,166 +1,52 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
-import requestApi from '../services/requestAPI';
 import './meals&drinks.css';
-import drinksCatList from '../images/drinksCatList';
-import allDrink from '../images/allDrink.svg';
+import RecipesBtns from './RecipesBtns';
 
 export default function Drinks() {
   const {
-    drinks,
-    catDrink,
-    setLoading,
-    filterSwitch,
-    setFilterSwitch,
-    catFilter,
-    setCatFilter,
-    togleCat,
-    setTogleCat } = useContext(RecipesContext);
-
-  const catDrinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
-
-  const drinkCategory = async (target) => {
-    setTogleCat(target.name);
-    if (togleCat === '' || togleCat !== target.name) {
-      setLoading(true);
-      const drinksFilter = await requestApi(catDrinkUrl, target.name);
-      setCatFilter(drinksFilter);
-      setLoading(false);
-      setFilterSwitch(true);
-    } if (togleCat === 'Ordinary Drink' || togleCat === 'Cocktail'
-    || togleCat === 'Shake' || togleCat === 'Cocoa') {
-      setFilterSwitch(false);
-      setTogleCat('');
-    }
-  };
-
-  const handleClickCategory = async ({ target }) => {
-    drinkCategory(target);
-  };
-
-  const deleteFilterCat = () => {
-    setFilterSwitch(false);
-  };
+    renderDrinks,
+  } = useContext(RecipesContext);
 
   const twelve = 12;
-  const five = 5;
+
   return (
 
     <main className="mainRecipes">
 
-      <nav className="navRecipes">
+      <RecipesBtns />
 
-        <button
-          className="categoryRecipes"
-          data-testid="All-category-filter"
-          type="button"
-          onClick={ deleteFilterCat }
-        >
-          <img
-            className="imgCategory"
-            src={ allDrink }
-            alt="categoryIcon"
-          />
-          All
-        </button>
+      <section className="cardsSection">
 
-        {catDrink.drinks.slice(0, five).map((catD, index) => (
+        {renderDrinks.drinks.slice(0, twelve).map((drinkC, index) => (
+
           <div
+            className="cardContainer"
+            data-testid={ `${index}-recipe-card` }
             key={ index }
           >
-            <button
-              className="categoryRecipes"
-              data-testid={ `${catD.strCategory}-category-filter` }
-              key={ index }
-              name={ catD.strCategory }
-              type="button"
-              onClick={ handleClickCategory }
-            >
-
+            <Link to={ `/drinks/${drinkC.idDrink}` }>
               <img
-                name={ catD.strCategory }
-                src={ drinksCatList[index] }
-                className="imgCategory"
-                alt='"categoryIcon"'
+                className="imgRecipes"
+                data-testid={ `${index}-card-img` }
+                alt={ drinkC.strDrink }
+                src={ drinkC.strDrinkThumb }
               />
-              { catD.strCategory }
-            </button>
+              <button
+                className="detailsCards"
+                data-testid={ `${index}-card-name` }
+                type="button"
+
+              >
+                {drinkC.strDrink}
+              </button>
+            </Link>
           </div>
         ))}
-      </nav>
 
-      {filterSwitch === true ? (
+      </section>
 
-        <section className="cardsSection">
-
-          {catFilter.drinks.slice(0, twelve).map((drink, index) => (
-
-            <div
-              className="cardContainer"
-              data-testid={ `${index}-recipe-card` }
-              key={ index }
-            >
-              <Link to={ `/drinks/${drink.idDrink}` }>
-                <img
-                  className="imgRecipes"
-                  data-testid={ `${index}-card-img` }
-                  alt={ drink.strDrink }
-                  src={ drink.strDrinkThumb }
-                />
-                <button
-                  className="detailsCards"
-                  data-testid={ `${index}-card-name` }
-                  type="button"
-                >
-                  {drink.strDrink}
-                </button>
-              </Link>
-            </div>
-
-          ))}
-
-        </section>
-
-      ) : (
-
-        <section className="cardsSection">
-
-          {drinks.drinks.slice(0, twelve).map((drinkC, index) => (
-
-            <div
-              className="cardContainer"
-              data-testid={ `${index}-recipe-card` }
-              key={ index }
-            >
-              <Link to={ `/drinks/${drinkC.idDrink}` }>
-                <img
-                  className="imgRecipes"
-                  data-testid={ `${index}-card-img` }
-                  alt={ drinkC.strDrink }
-                  src={ drinkC.strDrinkThumb }
-                />
-                <button
-                  className="detailsCards"
-                  data-testid={ `${index}-card-name` }
-                  type="button"
-
-                >
-                  {drinkC.strDrink}
-                </button>
-              </Link>
-            </div>
-          ))}
-
-        </section>
-
-      )}
     </main>
   );
 }
-
-Drinks.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }) }.isRequired;
