@@ -78,6 +78,19 @@ function RecipesDetails() {
   return (
     <div>
       <Header />
+      <button
+        data-testid="share-btn"
+        type="button"
+      >
+        share
+      </button>
+      <button
+        data-testid="favorite-btn"
+        type="button"
+      >
+        favorite
+      </button>
+
       <h1>Recipe Details</h1>
       <div>
         { !recipe && <Loading /> }
