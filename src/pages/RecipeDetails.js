@@ -1,12 +1,15 @@
 import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import Carousel from '../components/Carousel';
 import RecipesContext from '../context/RecipesContext';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import DetailsBtn from '../components/DetailsBtn';
 import IngredientsList from '../components/IngredientsList';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 function RecipesDetails() {
   const history = useHistory();
@@ -16,9 +19,12 @@ function RecipesDetails() {
   const [weight, setWeight] = useState(); // guarda os pesos dos ingredients
   const [ingredients, setIngredients] = useState([]); // guarda os ingredients
   const [codeVideo, setCodeVideo] = useState(''); // guarda o codigo do vídeo p/ meals
+  const [shareButtonClick, setShareButtonClick] = useState(false);
+  const [favoriteButtonClick, setFavoriteButtonClick] = useState(false);
   const { pathname } = history.location;
   const pathSplit = pathname.split('/');
   const type = pathSplit[1]; // Tipo Meals ou Drinks
+  const id = pathSplit[2];
 
   useEffect(() => {
     const pathLocation = window.location.pathname;
@@ -67,7 +73,6 @@ function RecipesDetails() {
   };
 
   useEffect(() => {
-    const id = pathSplit[2];
     if (pathSplit[1] === 'meals') {
       fetchIdRecipe(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     } else {
@@ -78,17 +83,30 @@ function RecipesDetails() {
   return (
     <div>
       <Header />
+
       <button
+        type="button"
         data-testid="share-btn"
-        type="button"
+        onClick={ () => {
+          copy(`http://localhost:3000/${type}/${id}`);
+          setShareButtonClick(!shareButtonClick);
+        } }
       >
-        share
+        { shareButtonClick ? 'Link copied!' : 'Share'}
       </button>
+
       <button
-        data-testid="favorite-btn"
         type="button"
+        data-testid="favorite-btn"
+        onClick={ () => {
+          setFavoriteButtonClick(!favoriteButtonClick);
+        } }
       >
-        favorite
+        <img
+          className="favorite-btn"
+          src={ favoriteButtonClick ? blackHeartIcon : whiteHeartIcon }
+          alt="botão de favoritar"
+        />
       </button>
 
       <h1>Recipe Details</h1>
