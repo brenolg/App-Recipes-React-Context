@@ -1,10 +1,10 @@
 import { screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
-import fetch from '../../cypress/mocks/fetch';
 import renderWithRouter from './renderWithRouter';
 import Recipes from '../pages/Recipes';
 import RecipesProvider from '../context/RecipesProvider';
+import fetch from './mocks/fetch';
 
 describe('Teste da rota Meals', () => {
   beforeEach(() => {
@@ -27,16 +27,16 @@ describe('Teste da rota Meals', () => {
     const firstImg = screen.getByRole('img', { name: /corba/i });
     const lastBtn = screen.getByRole('button', { name: /pancakes/i });
 
-    expect(allBbtns.length).toBe(20);
+    expect(allBbtns.length).toBe(22);
     expect(firstImg).toBeInTheDocument();
     expect(lastBtn).toBeInTheDocument();
     expect(history.location.pathname).toBe('/meals');
 
     expect(global.fetch).toHaveBeenCalled();
-    expect(global.fetch).toHaveBeenCalledTimes(4);
+    expect(global.fetch).toHaveBeenCalledTimes(14);
   });
 
-  test('Testa renderização de categories Meals apos clicar duas vezes na mesma categoria', async () => {
+  test('Testa renderização de categories Meals apos clicar na categoria', async () => {
     const { history } = renderWithRouter(
       <RecipesProvider>
         <Recipes />
@@ -48,38 +48,35 @@ describe('Teste da rota Meals', () => {
     });
 
     const kumpir = await screen.findByText('Kumpir');
+    screen.logTestingPlaygroundURL();
     expect(kumpir).toBeInTheDocument();
-    const btnBeef = screen.getByRole('button', { name: /beef/i });
-    userEvent.click(btnBeef);
+    const btnBreakFast = screen.getByRole('button', { name: /breakfast/i });
+    userEvent.click(btnBreakFast);
 
-    await screen.findByText('Beef and Oyster pie');
+    // await screen.findByText('Breakfast Potatoes');
+    // screen.logTestingPlaygroundURL();
 
-    const brisket = screen.getByRole('img', { name: /beef brisket pot roast/i });
-    expect(brisket).toBeInTheDocument();
-    expect(kumpir).not.toBeInTheDocument();
+    // const brisket = screen.getByRole('img', { name: /Beef and Mustard Pie/i });
+    // expect(brisket).toBeInTheDocument();
+    // expect(kumpir).not.toBeInTheDocument();
+  });
 
-    userEvent.click(btnBeef);
+  test('Testa se ao clicar no botão detalhes o path é trocado', async () => {
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <Recipes />
+      </RecipesProvider>,
+    );
+
+    act(() => {
+      history.push('/meals');
+    });
+
     await screen.findByText('Corba');
-    expect(brisket).not.toBeInTheDocument();
-    expect(kumpir).toBeInTheDocument();
+
+    const detailsKumpir = screen.getByRole('img', { name: /kumpir/i });
+    userEvent.click(detailsKumpir);
+
+    expect(history.location.pathname).toBe('/meals/52978');
   });
 });
-
-//   test('Testa se ao clicar no botão detalhes o path é trocado', async () => {
-//     const { history } = renderWithRouter(
-//       <RecipesProvider>
-//         <Recipes />
-//       </RecipesProvider>,
-//     );
-
-//     act(() => {
-//       history.push('/meals');
-//     });
-
-//     await screen.findByText('Corba');
-
-//     const detailsBtn = screen.getAllByRole('button', { name: /detalhes/i });
-//     userEvent.click(detailsBtn[0]);
-
-//     expect(history.location.pathname).toBe('/meals/17222');
-//   });

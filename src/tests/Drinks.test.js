@@ -1,10 +1,10 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
-import fetch from '../../cypress/mocks/fetch';
 import renderWithRouter from './renderWithRouter';
 import Recipes from '../pages/Recipes';
 import RecipesProvider from '../context/RecipesProvider';
+import fetch from './mocks/fetch';
 
 describe('Teste da rota Drinks', () => {
   const drinkTestId = 'drinks-bottom-btn';
@@ -37,10 +37,10 @@ describe('Teste da rota Drinks', () => {
     expect(history.location.pathname).toBe('/drinks');
 
     expect(global.fetch).toHaveBeenCalled();
-    expect(global.fetch).toHaveBeenCalledTimes(4);
+    expect(global.fetch).toHaveBeenCalledTimes(14);
   });
 
-  test('Testa renderização de categories Drinks apos clicar duas vezes na mesma categoria', async () => {
+  test('Testa renderização de categories Drinks apos clicar na categoria', async () => {
     renderWithRouter(
       <RecipesProvider>
         <Recipes />
@@ -50,37 +50,32 @@ describe('Teste da rota Drinks', () => {
     userEvent.click(screen.getByTestId(drinkTestId));
     await screen.findByText('GG');
 
-    const btnShake = screen.getByRole('button', { name: /shake/i });
-    userEvent.click(btnShake);
+    const btnCocoa = screen.getByRole('button', { name: /cocoa/i });
+    userEvent.click(btnCocoa);
 
-    await screen.findByText('151 Florida Bushwacker');
-
-    const shake = screen.getByRole('img', { name: /Black Forest Shake/i });
+    await screen.findByText('Chocolate Beverage');
+    const shake = screen.getByRole('img', { name: /Orange Scented Hot Chocolate/i });
     expect(shake).toBeInTheDocument();
+  });
 
-    const btnShake2 = screen.getByRole('button', { name: /shake/i });
-    userEvent.click(btnShake2);
+  test('Testa se ao clicar no botão detalhes o path é trocado', async () => {
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <Recipes />
+      </RecipesProvider>,
+    );
     await screen.findByText('Corba');
-    expect(shake).not.toBeInTheDocument();
+
+    act(() => {
+      history.push('/meals');
+    });
+
+    userEvent.click(screen.getByTestId(drinkTestId));
+    await screen.findByText('GG');
+
+    const secondImg = screen.getByRole('img', { name: /a1/i });
+    userEvent.click(secondImg);
+
+    expect(history.location.pathname).toBe('/drinks/17222');
   });
 });
-
-// Teste precisaria de um await da pagina de detalhes para funcionar
-// test('Testa se ao clicar no botão detalhes o path é trocado', async () => {
-//   const { history } = renderWithRouter(
-//     <RecipesProvider>
-//       <Recipes />
-//     </RecipesProvider>,
-//   );
-
-//   act(() => {
-//     history.push('/meals');
-//   });
-
-//   await screen.findByText('Corba');
-
-//   const detailsBtn = screen.getAllByRole('button', { name: /detalhes/i });
-//   userEvent.click(detailsBtn[0]);
-
-//   expect(history.location.pathname).toBe('/meals/17222');
-// });

@@ -1,6 +1,5 @@
 import { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 import Loading from '../components/Loading';
 import Footer from '../components/Footer';
@@ -72,7 +71,3 @@ export default function Recipes() {
     );
   }
 }
-Recipes.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }) }.isRequired;

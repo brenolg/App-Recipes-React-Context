@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import Recipes from '../pages/Recipes';
 import RecipesProvider from '../context/RecipesProvider';
-import fetch from '../../cypress/mocks/fetch';
+import fetch from './mocks/fetch';
 
 describe('Teste do componente Footer e suas funcionalidades', () => {
   beforeEach(() => {
