@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Carousel.css';
-import PropTypes from 'prop-types';
 
 function DetailsBtn() {
+  const start = 'Start Recipe';
   const [renderBtn, setRenderBtn] = useState(true);
-  const [btnTxt, setBtnTxt] = useState('Start Recipe');
+  const [btnTxt, setBtnTxt] = useState(start);
 
   const pathLocation = window.location.pathname;
   const pathSplit = pathLocation.split('/');
@@ -13,22 +13,37 @@ function DetailsBtn() {
   const drinkOrMeal = pathSplit[1];
 
   useEffect(() => {
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
     const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-
-    if (progressRecipes !== null) {
-      progressRecipes.forEach((recipe) => {
-        if (recipe.id === id) {
-          setBtnTxt('Continue Recipe');
-        } else {
-          setBtnTxt('Start Recipe');
-        }
-      });
+    console.log(drinkOrMeal);
+    if (progressRecipes !== null && progressRecipes !== undefined) {
+      if (drinkOrMeal === 'meals') {
+        const keysIdMeal = Object.keys(progressRecipes.meals);
+        keysIdMeal.forEach((recipeM) => {
+          if (recipeM === id) {
+            setBtnTxt('Continue Recipe');
+          } else {
+            setBtnTxt(start);
+          }
+        });
+      } else {
+        const keysIdDrink = Object.keys(progressRecipes.drinks);
+        keysIdDrink.forEach((recipeD) => {
+          if (recipeD === id) {
+            setBtnTxt('Continue Recipe');
+          } else {
+            setBtnTxt(start);
+          }
+        });
+      }
     }
+  }, []);
 
-    if (doneRecipes !== null) {
-      doneRecipes.forEach((recipeP) => {
-        if (recipeP.id === id) {
+  useEffect(() => {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+
+    if (doneRecipes !== null && doneRecipes !== undefined) {
+      doneRecipes.forEach((recipe) => {
+        if (recipe.id === id) {
           setRenderBtn(false);
         } else {
           setRenderBtn(true);
@@ -55,11 +70,5 @@ function DetailsBtn() {
 
   );
 }
-
-DetailsBtn.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
-}.isRequired;
 
 export default DetailsBtn;
