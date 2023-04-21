@@ -1,16 +1,16 @@
 # Projeto Recipes App
 
-Este é um projeto de app de receitas que utiliza React Hooks e Context API. O projeto consiste em desenvolver um sistema que permite visualizar, buscar, filtrar, favoritar, compartilhar e acompanhar o processo de preparação de receitas e drinks. A base de dados serão 2 APIs distintas, uma para comidas e outra para bebidas. A base de dados serão 2 APIs distintas, uma para comidas e outra para bebidas. O layout tem como foco dispositivos móveis, dessa forma todos os protótipos vão estar desenvolvidos em telas menores.
+Este é um projeto de app de receitas que utiliza React Hooks e Context API. O projeto consiste em desenvolver um sistema que permite visualizar, buscar, filtrar, favoritar, compartilhar e acompanhar o processo de preparação de receitas e drinks. A base de dados serão 2 APIs distintas, uma para comidas e outra para bebidas. O layout tem como foco dispositivos móveis, dessa forma todos os protótipos vão estar desenvolvidos em telas menores.
 
 ## Funcionalidades
 
-Buscar receitas por ingrediente, nome ou primeira letra
-Explorar receitas por categoria, origem ou surpresa
-Acessar os detalhes de cada receita, com ingredientes, instruções e vídeo
-Iniciar, pausar e finalizar o preparo de uma receita
-Favoritar e desfavoritar receitas
-Compartilhar receitas nas redes sociais
-Acessar o perfil do usuário com as receitas favoritas e feitas
+* Buscar receitas por ingrediente, nome ou primeira letra
+* Explorar receitas por categoria
+* Acessar os detalhes de cada receita, com ingredientes, instruções e vídeo
+* Iniciar, pausar e finalizar o preparo de uma receita
+* Favoritar e desfavoritar receitas
+* Compartilhar receitas nas redes sociais
+* Acessar o perfil do usuário com as receitas favoritas e feitas
 
 ## Tecnologias utilizadas
 
