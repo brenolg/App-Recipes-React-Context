@@ -15,6 +15,7 @@ Este é um projeto de app de receitas que utiliza React Hooks e Context API. O p
 ## Tecnologias utilizadas
 
 * HTML
+* LocalStorage
 * CSS
 * JavaScript
 * React
