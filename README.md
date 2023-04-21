@@ -9,8 +9,6 @@ Este é um projeto de app de receitas que utiliza React Hooks e Context API. O p
 * Acessar os detalhes de cada receita, com ingredientes, instruções e vídeo
 * Iniciar, pausar e finalizar o preparo de uma receita
 * Favoritar e desfavoritar receitas
-* Compartilhar receitas nas redes sociais
-* Acessar o perfil do usuário com as receitas favoritas e feitas
 
 ## Tecnologias utilizadas
 
