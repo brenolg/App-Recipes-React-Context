@@ -7,6 +7,7 @@ Este é um projeto de app de receitas que utiliza React Hooks e Context API. O p
 <a href="https://github.com/brenolg/App-Recipes/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=brenolg/App-Recipes" />
 </a>
+
 ## Funcionalidades
 
 * Buscar receitas por ingrediente, nome ou primeira letra
