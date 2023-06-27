@@ -36,7 +36,7 @@ Para instalar o projeto localmente, siga os seguintes passos:
 Clone o repositório com o comando 
 
 ```javascript
-git clone git@github.com:brenolg/App-Recipes.git
+git clone git@github.com:brenolg/App-Recipes-React-Context.git
 ```
 
 Entre na pasta do projeto com o comando 
