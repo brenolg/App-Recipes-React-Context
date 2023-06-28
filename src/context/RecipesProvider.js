@@ -17,7 +17,6 @@ export default function RecipesProvider({ children }) {
   const [list, setList] = useState();
   const [listMeals, setListMeals] = useState();
   const [listDrinks, setListDrinks] = useState();
-  const [drinkOrMealUrl, setDrinkOrMealUrl] = useState('meals');
   const [btn, setBtn] = useState(false);
   const [togleCat, setTogleCat] = useState('');
 
@@ -38,22 +37,6 @@ export default function RecipesProvider({ children }) {
     }
     fetch();
   }, []);
-
-  useEffect(() => {
-    const fetchList = async () => {
-      try {
-        // setLoading(true);
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log('recipesdkorMel', drinkOrMealUrl);
-        setList(data[`${drinkOrMealUrl}`]);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchList();
-  }, [url, drinkOrMealUrl]);
 
   const value = useMemo(() => ({
     catMeal,
@@ -84,7 +67,6 @@ export default function RecipesProvider({ children }) {
     setSearchInput,
     setLoading,
     setPath,
-    setDrinkOrMealUrl,
   }), [
     drinks,
     meals,
