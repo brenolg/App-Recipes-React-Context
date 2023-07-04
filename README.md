@@ -2,6 +2,10 @@
 
 Este é um projeto de app de receitas que utiliza React Hooks e Context API. O projeto consiste em desenvolver um sistema que permite visualizar, buscar, filtrar, favoritar, compartilhar e acompanhar o processo de preparação de receitas e drinks. A base de dados serão 2 APIs distintas, uma para comidas e outra para bebidas. O layout tem como foco dispositivos móveis, dessa forma todos os protótipos vão estar desenvolvidos em telas menores.
 
+<div align="center">
+</br></br><img align="center" src="app-receitas.png" />
+</br></br><p>Imagem ilustrativa disponibilizada pela Trybe</p>
+</div>
 
 ## Idealizadores
 <a href="https://github.com/brenolg/App-Recipes/graphs/contributors">
